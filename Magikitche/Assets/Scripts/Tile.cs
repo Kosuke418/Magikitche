@@ -18,6 +18,7 @@ public class Tile : MonoBehaviour
         set
         {
             number = value;
+            //Debug.Log("number:" + number);
             if (number == 0)
             {
                 SetEmpty();
@@ -43,7 +44,8 @@ public class Tile : MonoBehaviour
 
     void ApplyStyleFromHolder(int index)
     {
-        TileImage = Library.Instance.Ingreds[index].IngredImage;
+        Debug.Log(Library.Instance.Ingreds[index].IngredName);
+        TileImage.sprite = Library.Instance.Ingreds[index].IngredSprite;
     }
 
     void ApplyStyle(int num)
@@ -52,6 +54,30 @@ public class Tile : MonoBehaviour
         {
             case 1:
                 ApplyStyleFromHolder(1);
+                break;
+            case 2:
+                ApplyStyleFromHolder(2);
+                break;
+            case 3:
+                ApplyStyleFromHolder(3);
+                break;
+            case 4:
+                ApplyStyleFromHolder(4);
+                break;
+            case 5:
+                ApplyStyleFromHolder(5);
+                break;
+            case 6:
+                ApplyStyleFromHolder(6);
+                break;
+            case 7:
+                ApplyStyleFromHolder(7);
+                break;
+            case 8:
+                ApplyStyleFromHolder(8);
+                break;
+            case 9:
+                ApplyStyleFromHolder(9);
                 break;
             default:
                 Debug.LogError("アプリスタイルのnumberを確認して");

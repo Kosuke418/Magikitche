@@ -7,14 +7,14 @@ using UnityEngine.UI;
 public class Ingred
 {
     public string IngredName; 
-    public Image IngredImage;
+    public Sprite IngredSprite;
 }
 
 [System.Serializable]
 public class Food
 {
     public string FoodName;
-    public Image FoodImage;
+    public Sprite FoodSprite;
 }
 
 [System.Serializable]
