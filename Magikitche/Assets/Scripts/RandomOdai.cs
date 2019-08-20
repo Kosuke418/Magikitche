@@ -8,8 +8,7 @@ public class RandomOdai : MonoBehaviour
 
     public Text text;
     private bool oshita;
-    public int a;
-    public int temp;
+    private int temp;
 
     // Start is called before the first frame update
     void Start()
