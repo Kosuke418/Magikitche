@@ -79,6 +79,27 @@ public class Tile : MonoBehaviour
             case 9:
                 ApplyStyleFromHolder(9);
                 break;
+            case 10:
+                ApplyStyleFromHolder(10);
+                break;
+            case 11:
+                ApplyStyleFromHolder(11);
+                break;
+            case 12:
+                ApplyStyleFromHolder(12);
+                break;
+            case 13:
+                ApplyStyleFromHolder(13);
+                break;
+            case 14:
+                ApplyStyleFromHolder(14);
+                break;
+            case 15:
+                ApplyStyleFromHolder(15);
+                break;
+            case 16:
+                ApplyStyleFromHolder(16);
+                break;
             default:
                 Debug.LogError("アプリスタイルのnumberを確認して");
                 break;

@@ -18,7 +18,8 @@ public class MainGameManager : MonoBehaviour
     public Image ResultFood;
     public Image[] Food;
     public Image ResultPanel;
-
+    public Sprite Maru;
+    public Sprite Batu;
 
     public enum State{
         first,
@@ -27,6 +28,7 @@ public class MainGameManager : MonoBehaviour
         ready,
         choicefood,
         result,
+        resultPlayer,
         gameover,
         hint
     }
@@ -284,6 +286,20 @@ public class MainGameManager : MonoBehaviour
                     }
                 }
             }
+            if (count == 2)
+            {
+                ResultPanel.enabled = false;
+                ResultFood.enabled = false;
+                for(int i = 0; i < 8; i++)
+                {
+                    Food[i].enabled = false;
+                }
+                state = State.resultPlayer;
+            }
+        }else if(state == State.resultPlayer)
+        {
+
+            AllTiles[2, 0].GetComponentInChildren<Image>().sprite = Maru;
         }
     }
 }
