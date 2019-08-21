@@ -15,12 +15,13 @@ public class Food
 {
     public string FoodName;
     public Sprite FoodSprite;
-    public Answers[] Answer;
+    public Answer[] Answers;
 }
 
 [System.Serializable]
-public class Answers
+public class Answer
 {
+    public int AnswerNumber;
     public string AnswerName;
 }
 

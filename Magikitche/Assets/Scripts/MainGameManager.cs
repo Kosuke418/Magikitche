@@ -11,8 +11,13 @@ public class MainGameManager : MonoBehaviour
 
     private bool oshita;
     private int temp;
+    private int temp2;
+    private int count = 0;
+
     public Text text;
     public Image ResultFood;
+    public Image[] Food;
+    public Image ResultPanel;
 
 
     public enum State{
@@ -44,6 +49,10 @@ public class MainGameManager : MonoBehaviour
         state = State.ready;
         oshita = false;
         ResultFood.enabled = false;
+        for(int i = 1; i < 9; i++)
+        {
+            Food[i-1].enabled = false;
+        }
     }
 
     void Generate()
@@ -198,10 +207,10 @@ public class MainGameManager : MonoBehaviour
                 Debug.Log("Start");
             else
             {
-                Debug.Log("STOP");
-                Debug.Log(temp);
-                Debug.Log(Library.Instance.Categorys[temp].CategoryName);
-                Debug.Log(Library.Instance.Categorys[temp].Foods[0].FoodName);
+               // Debug.Log("STOP");
+                //Debug.Log(temp);
+                //Debug.Log(Library.Instance.Categorys[temp].CategoryName);
+                //Debug.Log(Library.Instance.Categorys[temp].Foods[temp2].FoodName);
                 state = State.choicefood;
             }
         }
@@ -255,8 +264,25 @@ public class MainGameManager : MonoBehaviour
             Debug.Log("results");
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                ResultFood.GetComponent<Image>().sprite = Library.Instance.Categorys[temp].Foods[0].FoodSprite;
+                temp2 = Random.Range(0, 3);
+                ResultFood.GetComponent<Image>().sprite = Library.Instance.Categorys[temp].Foods[temp2].FoodSprite;
+                ResultPanel.enabled = true;
                 ResultFood.enabled = true;
+                count++;
+                for (int j = 1; j < 9; j++)
+                {
+                    int[] temp1 = new int[100];
+                    temp1[j] = Library.Instance.Categorys[temp].Foods[temp2].Answers[j-1].AnswerNumber;
+                    if (Library.Instance.Ingreds[temp1[j]].IngredSprite != null)
+                    {
+                        Food[j - 1].enabled = true;
+                        Food[j - 1].GetComponent<Image>().sprite = Library.Instance.Ingreds[temp1[j]].IngredSprite;
+                    }
+                    else
+                    {
+                        Food[j - 1].enabled = false;
+                    }
+                }
             }
         }
     }
