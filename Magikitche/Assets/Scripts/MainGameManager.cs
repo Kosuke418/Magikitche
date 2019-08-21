@@ -10,7 +10,7 @@ public class MainGameManager : MonoBehaviour
     private List<Tile[]> columns = new List<Tile[]>();
 
 
-    public enum status{
+    public enum State{
         first,
         second,
         third,
@@ -19,6 +19,8 @@ public class MainGameManager : MonoBehaviour
         gameover,
         hint
     }
+
+    public State state;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +34,8 @@ public class MainGameManager : MonoBehaviour
         }
 
         columns.Add(new Tile[] { AllTiles[0, 0], AllTiles[0, 1], AllTiles[0, 2], AllTiles[0, 3] });
+
+        state = State.ready;
     }
 
     void Generate()
@@ -167,17 +171,40 @@ public class MainGameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (AllTiles[0, 1].GetComponent<Image>().sprite == null&& AllTiles[0, 0].GetComponent<Image>().sprite == null && AllTiles[0, 1].GetComponent<Image>().sprite == null && AllTiles[0, 2].GetComponent<Image>().sprite == null && AllTiles[0, 3].GetComponent<Image>().sprite == null)
-        {
-            Generate();
-        }
-
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        Debug.Log(state);
+        if (state == State.gameover)
         {
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        else if (state == State.ready)
         {
-
+            state = State.choicefood;
+        }
+        else if (state == State.choicefood)
+        {
+            if (AllTiles[0, 1].GetComponent<Image>().sprite == null && AllTiles[0, 0].GetComponent<Image>().sprite == null && AllTiles[0, 1].GetComponent<Image>().sprite == null && AllTiles[0, 2].GetComponent<Image>().sprite == null && AllTiles[0, 3].GetComponent<Image>().sprite == null)
+            {
+                if (AllTiles[1, 9].GetComponent<Image>().sprite == null)
+                {
+                    Generate();
+                    Debug.Log("プレイヤーの食材がいっぱいになったよ");
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                OnClickAct(1);
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                OnClickAct(3);
+            }
+            else if (Input.GetKeyDown(KeyCode.W))
+            {
+                OnClickAct(0);
+            }
+            else if (Input.GetKeyDown(KeyCode.S))
+            {
+                OnClickAct(2);
+            }
         }
     }
 }
