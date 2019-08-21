@@ -29,7 +29,14 @@ public class TipsManager : MonoBehaviour
             TipsPanel.enabled = !TipsPanel.enabled;
             TipsText.enabled = !TipsText.enabled;
             Debug.Log(MainGameManager.GetComponent<MainGameManager>().OdaiText.text);
-            TipsText.text = "";
+            if(MainGameManager.GetComponent<MainGameManager>().OdaiText.text=="おかず")
+                TipsText.text = "おかずだよ";
+            if (MainGameManager.GetComponent<MainGameManager>().OdaiText.text == "麺類")
+                TipsText.text = "めんるいだよ";
+            if (MainGameManager.GetComponent<MainGameManager>().OdaiText.text == "汁物")
+                TipsText.text = "しるものだよ";
+            if (MainGameManager.GetComponent<MainGameManager>().OdaiText.text == "ごはんもの")
+                TipsText.text = "ごはんものだよ";
         }
     }
 }

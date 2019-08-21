@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MainGameManager : MonoBehaviour
 {
@@ -17,7 +18,10 @@ public class MainGameManager : MonoBehaviour
     private int[] temp1 = new int[100];
     public static int P1Score = 100;
     public static int P2Score = 100;
+    public static int GameCount;
 
+    public Image DialogPanel;
+    public Text DialogText;
     public Text OdaiText;
     public Text ScoreText1;
     public Text ScoreText2;
@@ -28,11 +32,10 @@ public class MainGameManager : MonoBehaviour
     public Sprite Maru;
     public Sprite Batu;
 
-    public enum State{
-        first,
-        second,
+    public enum State {
         third,
-        ready,
+        firstready,
+        secondready,
         choicefood,
         result,
         score,
@@ -56,7 +59,7 @@ public class MainGameManager : MonoBehaviour
 
         columns.Add(new Tile[] { AllTiles[0, 0], AllTiles[0, 1], AllTiles[0, 2], AllTiles[0, 3] });
 
-        state = State.ready;
+        state = State.firstready;
         oshita = false;
         ResultFood.enabled = false;
         for(int i = 1; i < 9; i++)
@@ -73,7 +76,7 @@ public class MainGameManager : MonoBehaviour
         Tile[] LineOfTiles;
         LineOfTiles = columns[0];
         int start = 1;
-        int end = 14;
+        int end = 18;
         int count = 4;
 
         List<int> numbers = new List<int>();
@@ -87,7 +90,6 @@ public class MainGameManager : MonoBehaviour
             int index = Random.Range(0, numbers.Count);
             int randomNum = numbers[index];
             LineOfTiles[count].Number = randomNum;
-
             numbers.RemoveAt(index);
         }
     }
@@ -249,11 +251,12 @@ public class MainGameManager : MonoBehaviour
     void Update()
     {
         //Debug.Log(state);
-        if (state == State.gameover)
+        if (GameCount == 3)
         {
-
+            if (Input.GetKeyDown(KeyCode.Space))
+                SceneManager.LoadScene("Result");
         }
-        else if (state == State.ready)
+        else if (state == State.firstready)
         {
             Randomset();
         }
@@ -312,7 +315,7 @@ public class MainGameManager : MonoBehaviour
                     }
                 }
             }
-            if (Input.GetKeyDown(KeyCode.A)&&count==1)
+            if (Input.GetKeyDown(KeyCode.A) && count == 1)
             {
                 ResultPanel.enabled = false;
                 ResultFood.enabled = false;
@@ -354,11 +357,19 @@ public class MainGameManager : MonoBehaviour
                 }
             }
             state = State.score;
+            GameCount++;
         }
         else if (state == State.score)
         {
             ScoreText1.text = P1Score.ToString();
             ScoreText2.text = P2Score.ToString();
+            state = State.secondready;
+        }
+        else if (state == State.secondready)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+                SceneManager.LoadScene("Main");
+            //Application.LoadLevel("Main");
         }
     }
 }
