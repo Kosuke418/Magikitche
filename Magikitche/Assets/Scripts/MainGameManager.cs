@@ -59,12 +59,209 @@ public class MainGameManager : MonoBehaviour
         }
     }
 
+    public void OnClickAct(int number)
+    {
+        switch (number)
+        {
+            case 0:
+                if (AllTiles[1, 0].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[1, 0].GetComponent<Image>().sprite = AllTiles[0, 0].GetComponent<Image>().sprite;
+                    AllTiles[1, 0].GetComponent<Image>().enabled = true;
+                }
+                else if (AllTiles[1, 1].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[1, 1].GetComponent<Image>().sprite = AllTiles[0, 0].GetComponent<Image>().sprite;
+                    AllTiles[1, 1].GetComponent<Image>().enabled = true;
+                }
+                else if (AllTiles[1, 2].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[1, 2].GetComponent<Image>().sprite = AllTiles[0, 0].GetComponent<Image>().sprite;
+                    AllTiles[1, 2].GetComponent<Image>().enabled = true;
+                }
+                else if (AllTiles[1, 3].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[1, 3].GetComponent<Image>().sprite = AllTiles[0, 0].GetComponent<Image>().sprite;
+                    AllTiles[1, 3].GetComponent<Image>().enabled = true;
+                }
+                if (AllTiles[2, 0].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[2, 0].GetComponent<Image>().sprite = AllTiles[0, 2].GetComponent<Image>().sprite;
+                    AllTiles[2, 0].GetComponent<Image>().enabled = true;
+                }
+                else if (AllTiles[2, 1].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[2, 1].GetComponent<Image>().sprite = AllTiles[0, 2].GetComponent<Image>().sprite;
+                    AllTiles[2, 1].GetComponent<Image>().enabled = true;
+                }
+                else if (AllTiles[2, 2].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[2, 2].GetComponent<Image>().sprite = AllTiles[0, 2].GetComponent<Image>().sprite;
+                    AllTiles[2, 2].GetComponent<Image>().enabled = true;
+                }
+                else if (AllTiles[2, 3].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[2, 3].GetComponent<Image>().sprite = AllTiles[0, 2].GetComponent<Image>().sprite;
+                    AllTiles[2, 3].GetComponent<Image>().enabled = true;
+                }
+                AllTiles[0, 0].GetComponent<Image>().sprite = null;
+                AllTiles[0, 2].GetComponent<Image>().sprite = null;
+                break;
+
+
+            case 1:
+                if (AllTiles[2, 0].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[2, 0].GetComponent<Image>().sprite = AllTiles[0, 1].GetComponent<Image>().sprite;
+                    AllTiles[2, 0].GetComponent<Image>().enabled = true;
+                }
+                else if (AllTiles[2, 1].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[2, 1].GetComponent<Image>().sprite = AllTiles[0, 1].GetComponent<Image>().sprite;
+                    AllTiles[2, 1].GetComponent<Image>().enabled = true;
+                }
+                else if (AllTiles[2, 2].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[2, 2].GetComponent<Image>().sprite = AllTiles[0, 1].GetComponent<Image>().sprite;
+                    AllTiles[2, 2].GetComponent<Image>().enabled = true;
+                }
+                else if (AllTiles[2, 3].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[2, 3].GetComponent<Image>().sprite = AllTiles[0, 1].GetComponent<Image>().sprite;
+                    AllTiles[2, 3].GetComponent<Image>().enabled = true;
+                }
+                if (AllTiles[1, 0].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[1, 0].GetComponent<Image>().sprite = AllTiles[0, 3].GetComponent<Image>().sprite;
+                    AllTiles[1, 0].GetComponent<Image>().enabled = true;
+                }
+                else if (AllTiles[1, 1].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[1, 1].GetComponent<Image>().sprite = AllTiles[0, 3].GetComponent<Image>().sprite;
+                    AllTiles[1, 1].GetComponent<Image>().enabled = true;
+                }
+                else if (AllTiles[1, 2].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[1, 2].GetComponent<Image>().sprite = AllTiles[0, 3].GetComponent<Image>().sprite;
+                    AllTiles[1, 2].GetComponent<Image>().enabled = true;
+                }
+                else if (AllTiles[1, 3].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[1, 3].GetComponent<Image>().sprite = AllTiles[0, 3].GetComponent<Image>().sprite;
+                    AllTiles[1, 3].GetComponent<Image>().enabled = true;
+                }
+                AllTiles[0, 1].GetComponent<Image>().sprite = null;
+                AllTiles[0, 3].GetComponent<Image>().sprite = null;
+                break;
+
+
+            case 2:
+                if (AllTiles[1, 0].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[1, 0].GetComponent<Image>().sprite = AllTiles[0, 2].GetComponent<Image>().sprite;
+                    AllTiles[1, 0].GetComponent<Image>().enabled = true;
+                }
+                else if (AllTiles[1, 1].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[1, 1].GetComponent<Image>().sprite = AllTiles[0, 2].GetComponent<Image>().sprite;
+                    AllTiles[1, 1].GetComponent<Image>().enabled = true;
+                }
+                else if (AllTiles[1, 2].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[1, 2].GetComponent<Image>().sprite = AllTiles[0, 2].GetComponent<Image>().sprite;
+                    AllTiles[1, 2].GetComponent<Image>().enabled = true;
+                }
+                else if (AllTiles[1, 3].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[1, 3].GetComponent<Image>().sprite = AllTiles[0, 2].GetComponent<Image>().sprite;
+                    AllTiles[1, 3].GetComponent<Image>().enabled = true;
+                }
+                if (AllTiles[2, 0].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[2, 0].GetComponent<Image>().sprite = AllTiles[0, 0].GetComponent<Image>().sprite;
+                    AllTiles[2, 0].GetComponent<Image>().enabled = true;
+                }
+                else if (AllTiles[2, 1].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[2, 1].GetComponent<Image>().sprite = AllTiles[0, 0].GetComponent<Image>().sprite;
+                    AllTiles[2, 1].GetComponent<Image>().enabled = true;
+                }
+                else if (AllTiles[2, 2].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[2, 2].GetComponent<Image>().sprite = AllTiles[0, 0].GetComponent<Image>().sprite;
+                    AllTiles[2, 2].GetComponent<Image>().enabled = true;
+                }
+                else if (AllTiles[2, 3].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[2, 3].GetComponent<Image>().sprite = AllTiles[0, 0].GetComponent<Image>().sprite;
+                    AllTiles[2, 3].GetComponent<Image>().enabled = true;
+                }
+                AllTiles[0, 0].GetComponent<Image>().sprite = null;
+                AllTiles[0, 2].GetComponent<Image>().sprite = null;
+                break;
+
+
+            case 3:
+                if (AllTiles[2, 0].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[2, 0].GetComponent<Image>().sprite = AllTiles[0, 3].GetComponent<Image>().sprite;
+                    AllTiles[2, 0].GetComponent<Image>().enabled = true;
+                }
+                else if (AllTiles[2, 1].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[2, 1].GetComponent<Image>().sprite = AllTiles[0, 3].GetComponent<Image>().sprite;
+                    AllTiles[2, 1].GetComponent<Image>().enabled = true;
+                }
+                else if (AllTiles[2, 2].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[2, 2].GetComponent<Image>().sprite = AllTiles[0, 3].GetComponent<Image>().sprite;
+                    AllTiles[2, 2].GetComponent<Image>().enabled = true;
+                }
+                else if (AllTiles[2, 3].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[2, 3].GetComponent<Image>().sprite = AllTiles[0, 3].GetComponent<Image>().sprite;
+                    AllTiles[2, 3].GetComponent<Image>().enabled = true;
+                }
+                if (AllTiles[1, 0].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[1, 0].GetComponent<Image>().sprite = AllTiles[0, 1].GetComponent<Image>().sprite;
+                    AllTiles[1, 0].GetComponent<Image>().enabled = true;
+                }
+                else if (AllTiles[1, 1].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[1, 1].GetComponent<Image>().sprite = AllTiles[0, 1].GetComponent<Image>().sprite;
+                    AllTiles[1, 1].GetComponent<Image>().enabled = true;
+                }
+                else if (AllTiles[1, 2].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[1, 2].GetComponent<Image>().sprite = AllTiles[0, 1].GetComponent<Image>().sprite;
+                    AllTiles[1, 2].GetComponent<Image>().enabled = true;
+                }
+                else if (AllTiles[1, 3].GetComponent<Image>().sprite == null)
+                {
+                    AllTiles[1, 3].GetComponent<Image>().sprite = AllTiles[0, 1].GetComponent<Image>().sprite;
+                    AllTiles[1, 3].GetComponent<Image>().enabled = true;
+                }
+                AllTiles[0, 1].GetComponent<Image>().sprite = null;
+                AllTiles[0, 3].GetComponent<Image>().sprite = null;
+                break;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        if (AllTiles[0, 1].GetComponent<Image>().sprite == null&& AllTiles[0, 0].GetComponent<Image>().sprite == null && AllTiles[0, 1].GetComponent<Image>().sprite == null && AllTiles[0, 2].GetComponent<Image>().sprite == null && AllTiles[0, 3].GetComponent<Image>().sprite == null)
         {
             Generate();
+        }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+
         }
     }
 }
