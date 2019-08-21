@@ -253,8 +253,15 @@ public class MainGameManager : MonoBehaviour
         //Debug.Log(state);
         if (GameCount == 3)
         {
+            DialogPanel.enabled = true;
+            DialogText.enabled = true;
+            DialogText.text = "GM「Spaceボタンを押すと結果発表にいくよ！」";
             if (Input.GetKeyDown(KeyCode.Space))
+            {
+                DialogPanel.enabled = false;
+                DialogText.enabled = false;
                 SceneManager.LoadScene("Result");
+            }
         }
         else if (state == State.firstready)
         {
