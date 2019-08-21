@@ -18,7 +18,7 @@ public class MainGameManager : MonoBehaviour
     private int[] temp1 = new int[100];
     public static int P1Score = 100;
     public static int P2Score = 100;
-    public static int GameCount;
+    public static int GameCount = 0;
 
     public Image DialogPanel;
     public Text DialogText;
@@ -31,15 +31,23 @@ public class MainGameManager : MonoBehaviour
     public Image[] Result;
     public Sprite Maru;
     public Sprite Batu;
+    public Image STile;
+    public Image ShitaTile;
+    public Text STileText;
+    public Text ShitaTileText;
+    public Text WText;
+    public Text UeTileText;
 
     public enum State {
         third,
         firstready,
         secondready,
         choicefood,
+        secondchoicefood,
         result,
         score,
         resultPlayer,
+        tugi,
         gameover,
         hint
     }
@@ -58,8 +66,10 @@ public class MainGameManager : MonoBehaviour
         }
 
         columns.Add(new Tile[] { AllTiles[0, 0], AllTiles[0, 1], AllTiles[0, 2], AllTiles[0, 3] });
-
-        state = State.firstready;
+        if (GameCount == 0)
+            state = State.firstready;
+        else if (GameCount == 1||GameCount==2)
+            state = State.tugi;
         oshita = false;
         ResultFood.enabled = false;
         for(int i = 1; i < 9; i++)
@@ -68,16 +78,14 @@ public class MainGameManager : MonoBehaviour
         }
         ScoreText1.text = P1Score.ToString();
         ScoreText2.text = P2Score.ToString();
-
     }
 
-    void Generate()
+    void Generate(int num)
     {
         Tile[] LineOfTiles;
         LineOfTiles = columns[0];
         int start = 1;
         int end = 18;
-        int count = 4;
 
         List<int> numbers = new List<int>();
 
@@ -85,11 +93,11 @@ public class MainGameManager : MonoBehaviour
         {
             numbers.Add(i);
         }
-        while(count-- > 0)
+        while(num-- > 0)
         {
             int index = Random.Range(0, numbers.Count);
             int randomNum = numbers[index];
-            LineOfTiles[count].Number = randomNum;
+            AllTiles[0, num].Number = randomNum;
             numbers.RemoveAt(index);
         }
     }
@@ -237,11 +245,14 @@ public class MainGameManager : MonoBehaviour
                 Debug.Log("Start");
             else
             {
-               // Debug.Log("STOP");
-                //Debug.Log(temp);
-                //Debug.Log(Library.Instance.Categorys[temp].CategoryName);
-                //Debug.Log(Library.Instance.Categorys[temp].Foods[temp2].FoodName);
-                state = State.choicefood;
+				// Debug.Log("STOP");
+				//Debug.Log(temp);
+				//Debug.Log(Library.Instance.Categorys[temp].CategoryName);
+				//Debug.Log(Library.Instance.Categorys[temp].Foods[temp2].FoodName);
+				if (GameCount == 0)
+					state = State.choicefood;
+                else
+                    state = State.secondchoicefood;
             }
         }
     }
@@ -263,17 +274,98 @@ public class MainGameManager : MonoBehaviour
                 SceneManager.LoadScene("Result");
             }
         }
+        else if (state == State.tugi)
+        {
+
+            STile.enabled = false;
+            ShitaTile.enabled = false;
+            STileText.enabled = false;
+            ShitaTileText.enabled = false;
+            if (P1Score >= P2Score)
+            {
+                WText.text = "A";
+                UeTileText.text = "D";
+            }
+            else
+            {
+                WText.text = "←";
+                UeTileText.text = "→";
+            }
+            state = State.secondready;
+
+        }
+        else if (state == State.secondready)
+        {
+            Randomset();
+
+        }
         else if (state == State.firstready)
         {
             Randomset();
+        }
+        else if (state == State.secondchoicefood)
+        {
+            if (AllTiles[0, 0].GetComponent<Image>().sprite == null && AllTiles[0, 1].GetComponent<Image>().sprite == null)
+            {
+                if (AllTiles[1, 4].GetComponent<Image>().sprite == null&& AllTiles[2, 4].GetComponent<Image>().sprite == null)
+                {
+                    Generate(2);
+                    Debug.Log(AllTiles[0, 0].Number);
+                    Debug.Log(AllTiles[0, 1].Number);
+                }
+                else
+                {
+                    Debug.Log("プレイヤーの食材がいっぱいになったよ");
+                    state = State.result;
+                }
+            }
+            if (P1Score < P2Score)
+            {
+                WText.text = "A";
+                UeTileText.text = "D";
+                if (Input.GetKeyDown(KeyCode.D))
+                {
+                    if (Input.GetKeyDown(KeyCode.RightArrow))
+                    {
+                        OnClickAct(1);
+                    }
+                    else if (Input.GetKeyDown(KeyCode.LeftArrow))
+                    {
+                        OnClickAct(0);
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.A))
+                {
+                }
+            }
+            else
+            {
+                WText.text = "←";
+                UeTileText.text = "→";
+                if (Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    if (Input.GetKeyDown(KeyCode.D))
+                    {
+                        OnClickAct(1);
+                    }
+                    else if (Input.GetKeyDown(KeyCode.A))
+                    {
+                        OnClickAct(0);
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.LeftArrow))
+                {
+
+                }
+            }
         }
         else if (state == State.choicefood)
         {
             if (AllTiles[0, 1].GetComponent<Image>().sprite == null && AllTiles[0, 0].GetComponent<Image>().sprite == null && AllTiles[0, 1].GetComponent<Image>().sprite == null && AllTiles[0, 2].GetComponent<Image>().sprite == null && AllTiles[0, 3].GetComponent<Image>().sprite == null)
             {
-                if (AllTiles[1, 9].GetComponent<Image>().sprite == null)
+                if (AllTiles[1, 9].GetComponent<Image>().sprite == null&& AllTiles[2, 9].GetComponent<Image>().sprite == null)
                 {
-                    Generate();
+                    Generate(4);
                 }
                 else
                 {
@@ -341,11 +433,10 @@ public class MainGameManager : MonoBehaviour
                 {
                     for (int j = 1; j < 9; j++)
                     {
-                        if (AllTiles[h, g].Number == temp1[j])
+                        if (AllTiles[h, g].Number == temp1[j] && AllTiles[h, g].Number !=0)
                         {
-                            int t = (h * 10 + g) - 10;
-                            Result[t].sprite = Maru;
-                            Result[t].enabled = true;
+                            Result[(h * 10 + g) - 10].sprite = Maru;
+                            Result[(h * 10 + g) - 10].enabled = true;
                             if (h == 1)
                                 P1Score += 10;
                             if (h == 2)
@@ -360,23 +451,45 @@ public class MainGameManager : MonoBehaviour
                 if (Result[j].sprite == null)
                 {
                     Result[j].sprite = Batu;
-                    Result[j].enabled = true;
+                    if (GameCount == 1 || GameCount == 2)
+                    {
+                        Result[0].enabled = true;
+                        Result[1].enabled = true;
+                        Result[2].enabled = true;
+                        Result[3].enabled = true;
+                        Result[4].enabled = true;
+                        Result[5].enabled = false;
+                        Result[6].enabled = false;
+                        Result[7].enabled = false;
+                        Result[8].enabled = false;
+                        Result[9].enabled = false;
+                        Result[10].enabled = true;
+                        Result[11].enabled = true;
+                        Result[12].enabled = true;
+                        Result[13].enabled = true;
+                        Result[14].enabled = true;
+                        Result[15].enabled = false;
+                        Result[16].enabled = false;
+                        Result[17].enabled = false;
+                        Result[18].enabled = false;
+                        Result[19].enabled = false;
+                    }
+                    else
+                        Result[j].enabled = true;
                 }
             }
             state = State.score;
-            GameCount++;
         }
         else if (state == State.score)
         {
             ScoreText1.text = P1Score.ToString();
             ScoreText2.text = P2Score.ToString();
-            state = State.secondready;
-        }
-        else if (state == State.secondready)
-        {
             if (Input.GetKeyDown(KeyCode.Space))
+            {
                 SceneManager.LoadScene("Main");
-            //Application.LoadLevel("Main");
+                GameCount++;
+            }
+
         }
     }
 }
