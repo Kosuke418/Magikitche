@@ -12,12 +12,15 @@ public class MainGameManager : MonoBehaviour
     private bool oshita;
     private int temp;
     private int temp2;
+    private int t;
     private int count = 0;
+    private int[] temp1 = new int[100];
 
     public Text text;
     public Image ResultFood;
     public Image[] Food;
     public Image ResultPanel;
+    public Image[] Result;
     public Sprite Maru;
     public Sprite Batu;
 
@@ -62,7 +65,7 @@ public class MainGameManager : MonoBehaviour
         Tile[] LineOfTiles;
         LineOfTiles = columns[0];
         int start = 1;
-        int end = 8;
+        int end = 14;
         int count = 4;
 
         List<int> numbers = new List<int>();
@@ -91,8 +94,9 @@ public class MainGameManager : MonoBehaviour
                 {
                     if (AllTiles[1, FoodNum].GetComponent<Image>().sprite == null)
                     {
-                        AllTiles[1, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 0].GetComponent<Image>().sprite;
-                        if(AllTiles[0, 0].GetComponent<Image>().sprite!=null)
+                       // AllTiles[1, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 0].GetComponent<Image>().sprite;
+                        AllTiles[1, FoodNum].Number = AllTiles[0, 0].Number;
+                        if (AllTiles[0, 0].GetComponent<Image>().sprite!=null)
                              AllTiles[1, FoodNum].GetComponent<Image>().enabled = true;
                         break;
                     }
@@ -102,7 +106,8 @@ public class MainGameManager : MonoBehaviour
                 {
                     if (AllTiles[2, FoodNum].GetComponent<Image>().sprite == null)
                     {
-                        AllTiles[2, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 2].GetComponent<Image>().sprite;
+                       // AllTiles[2, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 2].GetComponent<Image>().sprite;
+                        AllTiles[2, FoodNum].Number = AllTiles[0, 2].Number;
                         if (AllTiles[0, 2].GetComponent<Image>().sprite != null)
                             AllTiles[2, FoodNum].GetComponent<Image>().enabled = true;
                         break;
@@ -110,6 +115,8 @@ public class MainGameManager : MonoBehaviour
                 }
                 AllTiles[0, 0].GetComponent<Image>().sprite = null;
                 AllTiles[0, 2].GetComponent<Image>().sprite = null;
+                AllTiles[0, 0].Number = 0;
+                AllTiles[0, 2].Number = 0;
                 break;
 
 
@@ -118,7 +125,8 @@ public class MainGameManager : MonoBehaviour
                 {
                     if (AllTiles[2, FoodNum].GetComponent<Image>().sprite == null)
                     {
-                        AllTiles[2, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 1].GetComponent<Image>().sprite;
+                      //  AllTiles[2, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 1].GetComponent<Image>().sprite;
+                        AllTiles[2, FoodNum].Number = AllTiles[0, 1].Number;
                         if (AllTiles[0, 1].GetComponent<Image>().sprite != null)
                             AllTiles[2, FoodNum].GetComponent<Image>().enabled = true;
                         break;
@@ -129,7 +137,8 @@ public class MainGameManager : MonoBehaviour
                 {
                     if (AllTiles[1, FoodNum].GetComponent<Image>().sprite == null)
                     {
-                        AllTiles[1, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 3].GetComponent<Image>().sprite;
+                       // AllTiles[1, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 3].GetComponent<Image>().sprite;
+                        AllTiles[1, FoodNum].Number = AllTiles[0, 3].Number;
                         if (AllTiles[0, 3].GetComponent<Image>().sprite != null)
                             AllTiles[1, FoodNum].GetComponent<Image>().enabled = true;
                         break;
@@ -137,6 +146,8 @@ public class MainGameManager : MonoBehaviour
                 }
                 AllTiles[0, 1].GetComponent<Image>().sprite = null;
                 AllTiles[0, 3].GetComponent<Image>().sprite = null;
+                AllTiles[0, 1].Number = 0;
+                AllTiles[0, 3].Number = 0;
                 break;
 
 
@@ -145,7 +156,8 @@ public class MainGameManager : MonoBehaviour
                 {
                     if (AllTiles[1, FoodNum].GetComponent<Image>().sprite == null)
                     {
-                        AllTiles[1, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 2].GetComponent<Image>().sprite;
+                      //  AllTiles[1, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 2].GetComponent<Image>().sprite;
+                        AllTiles[1, FoodNum].Number = AllTiles[0, 2].Number;
                         if (AllTiles[0, 2].GetComponent<Image>().sprite != null)
                             AllTiles[1, FoodNum].GetComponent<Image>().enabled = true;
                         break;
@@ -156,7 +168,8 @@ public class MainGameManager : MonoBehaviour
                 {
                     if (AllTiles[2, FoodNum].GetComponent<Image>().sprite == null)
                     {
-                        AllTiles[2, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 0].GetComponent<Image>().sprite;
+                      //  AllTiles[2, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 0].GetComponent<Image>().sprite;
+                        AllTiles[2, FoodNum].Number = AllTiles[0, 0].Number;
                         if (AllTiles[0, 0].GetComponent<Image>().sprite != null)
                             AllTiles[2, FoodNum].GetComponent<Image>().enabled = true;
                         break;
@@ -164,6 +177,8 @@ public class MainGameManager : MonoBehaviour
                 }
                 AllTiles[0, 0].GetComponent<Image>().sprite = null;
                 AllTiles[0, 2].GetComponent<Image>().sprite = null;
+                AllTiles[0, 0].Number = 0;
+                AllTiles[0, 2].Number = 0;
                 break;
 
 
@@ -172,7 +187,8 @@ public class MainGameManager : MonoBehaviour
                 {
                     if (AllTiles[2, FoodNum].GetComponent<Image>().sprite == null)
                     {
-                        AllTiles[2, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 3].GetComponent<Image>().sprite;
+                      //  AllTiles[2, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 3].GetComponent<Image>().sprite;
+                        AllTiles[2, FoodNum].Number = AllTiles[0, 3].Number;
                         if (AllTiles[0, 3].GetComponent<Image>().sprite != null)
                             AllTiles[2, FoodNum].GetComponent<Image>().enabled = true;
                         break;
@@ -183,7 +199,8 @@ public class MainGameManager : MonoBehaviour
                 {
                     if (AllTiles[1, FoodNum].GetComponent<Image>().sprite == null)
                     {
-                        AllTiles[1, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 1].GetComponent<Image>().sprite;
+                      //  AllTiles[1, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 1].GetComponent<Image>().sprite;
+                        AllTiles[1, FoodNum].Number = AllTiles[0, 1].Number;
                         if (AllTiles[0, 1].GetComponent<Image>().sprite != null)
                             AllTiles[1, FoodNum].GetComponent<Image>().enabled = true;
                         break;
@@ -191,6 +208,8 @@ public class MainGameManager : MonoBehaviour
                 }
                 AllTiles[0, 1].GetComponent<Image>().sprite = null;
                 AllTiles[0, 3].GetComponent<Image>().sprite = null;
+                AllTiles[0, 1].Number = 0;
+                AllTiles[0, 3].Number = 0;
                 break;
         }
     }
@@ -261,10 +280,11 @@ public class MainGameManager : MonoBehaviour
             {
                 OnClickAct(2);
             }
-        }else if (state == State.result)
+        }
+        else if (state == State.result)
         {
-            Debug.Log("results");
-            if (Input.GetKeyDown(KeyCode.Space))
+            // Debug.Log("results");
+            if (Input.GetKeyDown(KeyCode.Space) && count == 0)
             {
                 temp2 = Random.Range(0, 3);
                 ResultFood.GetComponent<Image>().sprite = Library.Instance.Categorys[temp].Foods[temp2].FoodSprite;
@@ -273,8 +293,7 @@ public class MainGameManager : MonoBehaviour
                 count++;
                 for (int j = 1; j < 9; j++)
                 {
-                    int[] temp1 = new int[100];
-                    temp1[j] = Library.Instance.Categorys[temp].Foods[temp2].Answers[j-1].AnswerNumber;
+                    temp1[j] = Library.Instance.Categorys[temp].Foods[temp2].Answers[j - 1].AnswerNumber;
                     if (Library.Instance.Ingreds[temp1[j]].IngredSprite != null)
                     {
                         Food[j - 1].enabled = true;
@@ -286,20 +305,39 @@ public class MainGameManager : MonoBehaviour
                     }
                 }
             }
-            if (count == 2)
+            if (Input.GetKeyDown(KeyCode.A))
             {
                 ResultPanel.enabled = false;
                 ResultFood.enabled = false;
-                for(int i = 0; i < 8; i++)
+                for (int i = 0; i < 8; i++)
                 {
                     Food[i].enabled = false;
                 }
                 state = State.resultPlayer;
             }
-        }else if(state == State.resultPlayer)
+        }
+        else if (state == State.resultPlayer)
         {
-
-            AllTiles[2, 0].GetComponentInChildren<Image>().sprite = Maru;
+            {
+                for (int h = 1; h <= 2; h++)
+                {
+                    for (int g = 0; g <= 9; g++)
+                    {
+                        for (int j = 1; j < 9; j++)
+                        {
+                            if (AllTiles[h, g].Number == temp1[j])
+                            {
+                                int t = (h * 10 + g) - 10;
+                                Result[t].sprite = Maru;
+                                Result[t].enabled = true;
+                                break;
+                            }
+                            Result[t].sprite = Batu;
+                            Result[t].enabled = true;
+                        }
+                    }
+                }
+            }
         }
     }
 }
