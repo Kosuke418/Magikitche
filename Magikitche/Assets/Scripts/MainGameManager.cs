@@ -318,24 +318,28 @@ public class MainGameManager : MonoBehaviour
         }
         else if (state == State.resultPlayer)
         {
+            for (int h = 1; h <= 2; h++)
             {
-                for (int h = 1; h <= 2; h++)
+                for (int g = 0; g <= 9; g++)
                 {
-                    for (int g = 0; g <= 9; g++)
+                    for (int j = 1; j < 9; j++)
                     {
-                        for (int j = 1; j < 9; j++)
+                        if (AllTiles[h, g].Number == temp1[j])
                         {
-                            if (AllTiles[h, g].Number == temp1[j])
-                            {
-                                int t = (h * 10 + g) - 10;
-                                Result[t].sprite = Maru;
-                                Result[t].enabled = true;
-                                break;
-                            }
-                            Result[t].sprite = Batu;
+                            int t = (h * 10 + g) - 10;
+                            Result[t].sprite = Maru;
                             Result[t].enabled = true;
+                            break;
                         }
                     }
+                }
+            }
+            for (int j = 0; j < 20; j++)
+            {
+                if (Result[j].sprite == null)
+                {
+                    Result[j].sprite = Batu;
+                    Result[j].enabled = true;
                 }
             }
         }
