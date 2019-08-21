@@ -44,7 +44,6 @@ public class Tile : MonoBehaviour
 
     void ApplyStyleFromHolder(int index)
     {
-        Debug.Log(Library.Instance.Ingreds[index].IngredName);
         TileImage.sprite = Library.Instance.Ingreds[index].IngredSprite;
     }
 

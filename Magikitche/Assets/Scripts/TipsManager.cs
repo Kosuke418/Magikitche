@@ -5,13 +5,14 @@ using UnityEngine.UI;
 
 public class TipsManager : MonoBehaviour
 {
-    public Image image;
-    public Text text;
+    public Image TipsPanel;
+    public Text TipsText;
+    public GameObject MainGameManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        image.enabled = false;
+        TipsPanel.enabled = false;
     }
 
     // Update is called once per frame
@@ -22,8 +23,13 @@ public class TipsManager : MonoBehaviour
 
     public void OnClicAct()
     {
-        Debug.Log("おしたよ");
-        image.enabled = !image.enabled;
-        text.enabled = !text.enabled;
+        if (MainGameManager.GetComponent<MainGameManager>().state == global::MainGameManager.State.choicefood)
+        {
+            Debug.Log("おしたよ");
+            TipsPanel.enabled = !TipsPanel.enabled;
+            TipsText.enabled = !TipsText.enabled;
+            Debug.Log(MainGameManager.GetComponent<MainGameManager>().OdaiText.text);
+            TipsText.text = "";
+        }
     }
 }

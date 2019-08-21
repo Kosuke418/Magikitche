@@ -10,13 +10,17 @@ public class MainGameManager : MonoBehaviour
     private List<Tile[]> columns = new List<Tile[]>();
 
     private bool oshita;
-    private int temp;
+    public int temp;
     private int temp2;
     private int t;
     private int count = 0;
     private int[] temp1 = new int[100];
+    public static int P1Score = 100;
+    public static int P2Score = 100;
 
-    public Text text;
+    public Text OdaiText;
+    public Text ScoreText1;
+    public Text ScoreText2;
     public Image ResultFood;
     public Image[] Food;
     public Image ResultPanel;
@@ -31,6 +35,7 @@ public class MainGameManager : MonoBehaviour
         ready,
         choicefood,
         result,
+        score,
         resultPlayer,
         gameover,
         hint
@@ -58,6 +63,9 @@ public class MainGameManager : MonoBehaviour
         {
             Food[i-1].enabled = false;
         }
+        ScoreText1.text = P1Score.ToString();
+        ScoreText2.text = P2Score.ToString();
+
     }
 
     void Generate()
@@ -78,7 +86,6 @@ public class MainGameManager : MonoBehaviour
         {
             int index = Random.Range(0, numbers.Count);
             int randomNum = numbers[index];
-            Debug.Log(randomNum);
             LineOfTiles[count].Number = randomNum;
 
             numbers.RemoveAt(index);
@@ -219,7 +226,7 @@ public class MainGameManager : MonoBehaviour
         if (oshita)
         {
             temp = Random.Range(0, 4);
-            text.text = Library.Instance.Categorys[temp].CategoryName;
+            OdaiText.text = Library.Instance.Categorys[temp].CategoryName;
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -305,7 +312,7 @@ public class MainGameManager : MonoBehaviour
                     }
                 }
             }
-            if (Input.GetKeyDown(KeyCode.A))
+            if (Input.GetKeyDown(KeyCode.A)&&count==1)
             {
                 ResultPanel.enabled = false;
                 ResultFood.enabled = false;
@@ -329,6 +336,10 @@ public class MainGameManager : MonoBehaviour
                             int t = (h * 10 + g) - 10;
                             Result[t].sprite = Maru;
                             Result[t].enabled = true;
+                            if (h == 1)
+                                P1Score += 10;
+                            if (h == 2)
+                                P2Score += 10;
                             break;
                         }
                     }
@@ -342,6 +353,12 @@ public class MainGameManager : MonoBehaviour
                     Result[j].enabled = true;
                 }
             }
+            state = State.score;
+        }
+        else if (state == State.score)
+        {
+            ScoreText1.text = P1Score.ToString();
+            ScoreText2.text = P2Score.ToString();
         }
     }
 }
