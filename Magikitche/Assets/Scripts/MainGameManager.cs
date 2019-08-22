@@ -16,6 +16,7 @@ public class MainGameManager : MonoBehaviour
     private int t;
     private int count = 0;
     private int[] temp1 = new int[100];
+    private int Game2Count = 0;
     public static int P1Score = 100;
     public static int P2Score = 100;
     public static int GameCount = 0;
@@ -23,8 +24,8 @@ public class MainGameManager : MonoBehaviour
     public static int IngredNum2;
     public static int GameProgress;
     public static int PrecedNum;
-    public static int[] Player1Indered;
-    public static int[] Player2Indered;
+    public static int[] Player1Ingred = new int[10];
+    public static int[] Player2Ingred = new int[10];
 
     public Image DialogPanel;
     public Text DialogText;
@@ -241,10 +242,11 @@ public class MainGameManager : MonoBehaviour
             case 4:
                 for (int FoodNum = 0; FoodNum < 5; FoodNum++)
                 {
-                    if (AllTiles[1, FoodNum].GetComponent<Image>().sprite == null)
+                    if (AllTiles[1, FoodNum].GetComponent<Image>().sprite == null && Player1Ingred[FoodNum] == 0)
                     {
                         // AllTiles[1, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 0].GetComponent<Image>().sprite;
                         AllTiles[1, FoodNum].Number = AllTiles[0, 0].Number;
+                        Player1Ingred[FoodNum] = AllTiles[0, 0].Number;
                         if (AllTiles[0, 0].GetComponent<Image>().sprite != null)
                             AllTiles[1, FoodNum].GetComponent<Image>().enabled = true;
                         break;
@@ -253,10 +255,11 @@ public class MainGameManager : MonoBehaviour
                 }
                 for (int FoodNum = 0; FoodNum < 5; FoodNum++)
                 {
-                    if (AllTiles[2, FoodNum].GetComponent<Image>().sprite == null)
+                    if (AllTiles[2, FoodNum].GetComponent<Image>().sprite == null && Player2Ingred[FoodNum] == 0)
                     {
                         // AllTiles[2, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 2].GetComponent<Image>().sprite;
                         AllTiles[2, FoodNum].Number = AllTiles[0, 1].Number;
+                        Player2Ingred[FoodNum] = AllTiles[0, 1].Number;
                         if (AllTiles[0, 1].GetComponent<Image>().sprite != null)
                             AllTiles[2, FoodNum].GetComponent<Image>().enabled = true;
                         break;
@@ -272,10 +275,11 @@ public class MainGameManager : MonoBehaviour
             case 5:
                 for (int FoodNum = 0; FoodNum < 5; FoodNum++)
                 {
-                    if (AllTiles[2, FoodNum].GetComponent<Image>().sprite == null)
+                    if (AllTiles[2, FoodNum].GetComponent<Image>().sprite == null && Player2Ingred[FoodNum] == 0)
                     {
                         //  AllTiles[2, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 1].GetComponent<Image>().sprite;
                         AllTiles[2, FoodNum].Number = AllTiles[0, 1].Number;
+                        Player2Ingred[FoodNum] = AllTiles[0, 1].Number;
                         if (AllTiles[0, 1].GetComponent<Image>().sprite != null)
                             AllTiles[2, FoodNum].GetComponent<Image>().enabled = true;
                         break;
@@ -284,10 +288,11 @@ public class MainGameManager : MonoBehaviour
                 }
                 for (int FoodNum = 0; FoodNum < 5; FoodNum++)
                 {
-                    if (AllTiles[1, FoodNum].GetComponent<Image>().sprite == null)
+                    if (AllTiles[1, FoodNum].GetComponent<Image>().sprite == null && Player1Ingred[FoodNum] == 0)
                     {
                         // AllTiles[1, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 3].GetComponent<Image>().sprite;
                         AllTiles[1, FoodNum].Number = AllTiles[0, 0].Number;
+                        Player1Ingred[FoodNum] = AllTiles[0, 0].Number;
                         if (AllTiles[0, 0].GetComponent<Image>().sprite != null)
                             AllTiles[1, FoodNum].GetComponent<Image>().enabled = true;
                         break;
@@ -353,8 +358,13 @@ public class MainGameManager : MonoBehaviour
             ShitaTile.enabled = false;
             WText.enabled = false;
             UeTileText.enabled = false;
-
+            if (GameCount == 2)
+            {
+                Player1Ingred = new int[10];
+                Player2Ingred = new int[10];
+            }
             state = State.secondready;
+
         }
         else if (state == State.secondready)
         {
@@ -375,9 +385,9 @@ public class MainGameManager : MonoBehaviour
             {
                 PrecedNum = 2;
             }
-            if (AllTiles[0, 0].GetComponent<Image>().sprite == null && AllTiles[0, 1].GetComponent<Image>().sprite == null)
+            if (AllTiles[0, 0].GetComponent<Image>().sprite == null && AllTiles[0, 1].GetComponent<Image>().sprite == null && GameProgress == 0)
             {
-                if (AllTiles[1, 4].GetComponent<Image>().sprite == null&& AllTiles[2, 4].GetComponent<Image>().sprite == null)
+                if (AllTiles[1, 4].GetComponent<Image>().sprite == null&& AllTiles[2, 4].GetComponent<Image>().sprite == null && GameProgress == 0)
                 {
                     Generate(2);
                     IngredNum1 = AllTiles[0, 0].Number;
@@ -393,8 +403,14 @@ public class MainGameManager : MonoBehaviour
                     state = State.result;
                 }
             }
-            if (PrecedNum==1)
+            if (PrecedNum==1 && GameProgress==1)
             {
+                AllTiles[0, 0].Number = IngredNum1;
+                AllTiles[0, 1].Number = IngredNum2;
+                STileText.enabled = false;
+                ShitaTileText.enabled = false;
+                STile.enabled = false;
+                ShitaTile.enabled = false;
                 WText.enabled = true;
                 UeTileText.enabled = true;
                 WText.text = "A";
@@ -402,15 +418,29 @@ public class MainGameManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.A))
                 {
                     OnClickAct(4);
+                    GameProgress = 0;
                 }
                 else if (Input.GetKeyDown(KeyCode.D))
                 {
                     OnClickAct(5);
+                    GameProgress = 0;
                 }
-               
+                for (int i = 0; i < 5; i++)
+                {
+                    if (Player1Ingred[i] != 0)
+                        AllTiles[1, i].Number = Player1Ingred[i];
+                    if (Player2Ingred[i] != 0)
+                        AllTiles[2, i].Number = Player2Ingred[i];
+                }
             }
-            else if (PrecedNum==2)
+            else if (PrecedNum==2 && GameProgress==1)
             {
+                AllTiles[0, 0].Number = IngredNum1;
+                AllTiles[0, 1].Number = IngredNum2;
+                STileText.enabled = false;
+                ShitaTileText.enabled = false;
+                STile.enabled = false;
+                ShitaTile.enabled = false;
                 WText.enabled = true;
                 UeTileText.enabled = true;
                 WText.text = "←";
@@ -418,12 +448,22 @@ public class MainGameManager : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.LeftArrow))
                 {
                     OnClickAct(4);
+                    GameProgress = 0;
                 }
                 else if (Input.GetKeyDown(KeyCode.RightArrow))
                 {
                     OnClickAct(5);
+                    GameProgress = 0;
+                }
+                for (int i = 0; i < 5; i++)
+                {
+                    if (Player1Ingred[i] != 0)
+                        AllTiles[1, i].Number = Player1Ingred[i];
+                    if (Player2Ingred[i] != 0)
+                        AllTiles[2, i].Number = Player2Ingred[i];
                 }
             }
+            
         }
         else if (state == State.choicefood)
         {
