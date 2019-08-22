@@ -16,7 +16,6 @@ public class MainGameManager : MonoBehaviour
     private int t;
     private int count = 0;
     private int[] temp1 = new int[100];
-    private int Game2Count = 0;
     public static int P1Score = 100;
     public static int P2Score = 100;
     public static int GameCount = 0;

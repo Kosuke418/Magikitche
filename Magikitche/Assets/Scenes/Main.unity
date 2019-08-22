@@ -642,75 +642,75 @@ MonoBehaviour:
   - IngredName: "\u304D\u3083\u3079\u3064"
     IngredSprite: {fileID: 21300000, guid: ce1f5fff985342d4b9eca5307bcb97a7, type: 3}
     IngredPlusScore: 20
-    IngredMinusScore: 0
+    IngredMinusScore: 20
   - IngredName: "\u3058\u3083\u304C\u3044\u3082"
     IngredSprite: {fileID: 21300000, guid: d7a51ee21852f7c4baf9e9d3999c51d6, type: 3}
     IngredPlusScore: 10
-    IngredMinusScore: 0
+    IngredMinusScore: 10
   - IngredName: "\u305F\u307E\u3054"
     IngredSprite: {fileID: 21300000, guid: ab750808fcc26114da8235f5f0db9c10, type: 3}
     IngredPlusScore: 10
-    IngredMinusScore: 0
+    IngredMinusScore: 10
   - IngredName: "\u4EBA\u53C2"
     IngredSprite: {fileID: 21300000, guid: 8998e3883eb50d34caccd24c9844ae19, type: 3}
     IngredPlusScore: 10
-    IngredMinusScore: 0
+    IngredMinusScore: 10
   - IngredName: "\u725B\u8089"
     IngredSprite: {fileID: 21300000, guid: cf061748767499e47b86cac2683809be, type: 3}
     IngredPlusScore: 15
-    IngredMinusScore: 0
+    IngredMinusScore: 15
   - IngredName: "\u7389\u306D\u304E"
     IngredSprite: {fileID: 21300000, guid: 0f9ee209eab2a8547bb840537463e8d5, type: 3}
     IngredPlusScore: 10
-    IngredMinusScore: 0
+    IngredMinusScore: 10
   - IngredName: "\u8C5A\u8089"
     IngredSprite: {fileID: 21300000, guid: 5d82439c5e926314dbe6050a35781224, type: 3}
     IngredPlusScore: 15
-    IngredMinusScore: 0
+    IngredMinusScore: 15
   - IngredName: "\u9D8F\u8089"
     IngredSprite: {fileID: 21300000, guid: 9c596f3c8a916404080159fa416ee7ea, type: 3}
     IngredPlusScore: 15
-    IngredMinusScore: 0
+    IngredMinusScore: 15
   - IngredName: "\u30D4\u30FC\u30DE\u30F3"
     IngredSprite: {fileID: 21300000, guid: 52092f8450aa1da41877176073b671f2, type: 3}
     IngredPlusScore: 50
-    IngredMinusScore: 0
+    IngredMinusScore: 50
   - IngredName: "\u304D\u3085\u3046\u308A"
     IngredSprite: {fileID: 21300000, guid: 42ab9ae3424d34f45ac6007ef4fbe8f3, type: 3}
     IngredPlusScore: 50
-    IngredMinusScore: 0
+    IngredMinusScore: 50
   - IngredName: "\u3068\u307E\u3068"
     IngredSprite: {fileID: 21300000, guid: 651f03b812f320944b1541d3a0e7866c, type: 3}
     IngredPlusScore: 20
-    IngredMinusScore: 0
+    IngredMinusScore: 20
   - IngredName: "\u3053\u3093\u306B\u3083\u304F"
     IngredSprite: {fileID: 21300000, guid: 25f29be7cd67d61448e0aa9a2fe03743, type: 3}
     IngredPlusScore: 20
-    IngredMinusScore: 0
+    IngredMinusScore: 20
   - IngredName: "\u5927\u6839"
     IngredSprite: {fileID: 21300000, guid: ce4c0707c4bc64e4c8d524dbe167f5f7, type: 3}
     IngredPlusScore: 20
-    IngredMinusScore: 0
+    IngredMinusScore: 20
   - IngredName: "\u3057\u3044\u305F\u3051"
     IngredSprite: {fileID: 21300000, guid: ca37d1f5503a879478db03a6850ec44b, type: 3}
     IngredPlusScore: 20
-    IngredMinusScore: 0
+    IngredMinusScore: 20
   - IngredName: "\u30DE\u30E8\u30CD\u30FC\u30BA"
     IngredSprite: {fileID: 21300000, guid: d98e066aff7a87a4fac3a5342a86a30e, type: 3}
     IngredPlusScore: 50
-    IngredMinusScore: 0
+    IngredMinusScore: 50
   - IngredName: "\u30BD\u30FC\u30B9"
     IngredSprite: {fileID: 21300000, guid: 01688c2db76089d4696d874da54b7191, type: 3}
     IngredPlusScore: 50
-    IngredMinusScore: 0
+    IngredMinusScore: 50
   - IngredName: "\u3060\u3057"
     IngredSprite: {fileID: 21300000, guid: 06c8bddf012da934886a01064887d9ce, type: 3}
     IngredPlusScore: 15
-    IngredMinusScore: 0
+    IngredMinusScore: 15
   - IngredName: "\u307F\u305D"
     IngredSprite: {fileID: 21300000, guid: 872e63bdca763fe44b563f7895ad9157, type: 3}
     IngredPlusScore: 50
-    IngredMinusScore: 0
+    IngredMinusScore: 50
   Categorys:
   - CategoryName: "\u304A\u304B\u305A"
     Foods:
@@ -1096,9 +1096,9 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 14a42132f9b8623499f9c7d542cc3bfc, type: 3}
     m_FontSize: 14
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 40
@@ -1995,9 +1995,9 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 14a42132f9b8623499f9c7d542cc3bfc, type: 3}
     m_FontSize: 14
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 40
@@ -2449,9 +2449,9 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 14a42132f9b8623499f9c7d542cc3bfc, type: 3}
     m_FontSize: 14
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 40
@@ -3718,7 +3718,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: c8089767ea62d1442a36f5ccdd5e3204, type: 3}
+    m_Font: {fileID: 12800000, guid: 14a42132f9b8623499f9c7d542cc3bfc, type: 3}
     m_FontSize: 14
     m_FontStyle: 1
     m_BestFit: 1
@@ -4065,7 +4065,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 14a42132f9b8623499f9c7d542cc3bfc, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -4293,7 +4293,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: c8089767ea62d1442a36f5ccdd5e3204, type: 3}
+    m_Font: {fileID: 12800000, guid: 14a42132f9b8623499f9c7d542cc3bfc, type: 3}
     m_FontSize: 14
     m_FontStyle: 1
     m_BestFit: 0
@@ -4536,7 +4536,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 14a42132f9b8623499f9c7d542cc3bfc, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -5695,9 +5695,9 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 14a42132f9b8623499f9c7d542cc3bfc, type: 3}
     m_FontSize: 14
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 40
@@ -6445,7 +6445,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: c8089767ea62d1442a36f5ccdd5e3204, type: 3}
+    m_Font: {fileID: 12800000, guid: 14a42132f9b8623499f9c7d542cc3bfc, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
