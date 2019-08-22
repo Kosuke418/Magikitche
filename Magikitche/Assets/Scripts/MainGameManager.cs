@@ -19,6 +19,12 @@ public class MainGameManager : MonoBehaviour
     public static int P1Score = 100;
     public static int P2Score = 100;
     public static int GameCount = 0;
+    public static int IngredNum1;
+    public static int IngredNum2;
+    public static int GameProgress;
+    public static int PrecedNum;
+    public static int[] Player1Indered;
+    public static int[] Player2Indered;
 
     public Image DialogPanel;
     public Text DialogText;
@@ -66,10 +72,13 @@ public class MainGameManager : MonoBehaviour
         }
 
         columns.Add(new Tile[] { AllTiles[0, 0], AllTiles[0, 1], AllTiles[0, 2], AllTiles[0, 3] });
-        if (GameCount == 0)
+        if (GameCount == 0 && GameProgress != 1)
             state = State.firstready;
-        else if (GameCount == 1||GameCount==2)
+        else if ((GameCount == 1 || GameCount == 2)&& GameProgress != 1)
             state = State.tugi;
+        else if (GameProgress == 1)
+            state = State.secondchoicefood;
+
         oshita = false;
         ResultFood.enabled = false;
         for(int i = 1; i < 9; i++)
@@ -277,22 +286,14 @@ public class MainGameManager : MonoBehaviour
         else if (state == State.tugi)
         {
 
-            STile.enabled = false;
-            ShitaTile.enabled = false;
             STileText.enabled = false;
             ShitaTileText.enabled = false;
-            if (P1Score >= P2Score)
-            {
-                WText.text = "A";
-                UeTileText.text = "D";
-            }
-            else
-            {
-                WText.text = "←";
-                UeTileText.text = "→";
-            }
-            state = State.secondready;
+            STile.enabled = false;
+            ShitaTile.enabled = false;
+            WText.enabled = false;
+            UeTileText.enabled = false;
 
+            state = State.secondready;
         }
         else if (state == State.secondready)
         {
@@ -305,13 +306,25 @@ public class MainGameManager : MonoBehaviour
         }
         else if (state == State.secondchoicefood)
         {
+            if (P1Score >= P2Score)
+            {
+                PrecedNum = 1;
+            }
+            else
+            {
+                PrecedNum = 2;
+            }
             if (AllTiles[0, 0].GetComponent<Image>().sprite == null && AllTiles[0, 1].GetComponent<Image>().sprite == null)
             {
                 if (AllTiles[1, 4].GetComponent<Image>().sprite == null&& AllTiles[2, 4].GetComponent<Image>().sprite == null)
                 {
                     Generate(2);
-                    Debug.Log(AllTiles[0, 0].Number);
-                    Debug.Log(AllTiles[0, 1].Number);
+                    IngredNum1 = AllTiles[0, 0].Number;
+                    IngredNum2 = AllTiles[0, 1].Number;
+                    //Debug.Log(AllTiles[0, 0].Number);
+                    //Debug.Log(AllTiles[0, 1].Number);
+                    GameProgress = 0;
+                    SceneManager.LoadScene("AuctionScene");
                 }
                 else
                 {
@@ -319,43 +332,35 @@ public class MainGameManager : MonoBehaviour
                     state = State.result;
                 }
             }
-            if (P1Score < P2Score)
+            if (PrecedNum==1)
             {
+                WText.enabled = true;
+                UeTileText.enabled = true;
                 WText.text = "A";
                 UeTileText.text = "D";
-                if (Input.GetKeyDown(KeyCode.D))
+                if (Input.GetKeyDown(KeyCode.A))
                 {
-                    if (Input.GetKeyDown(KeyCode.RightArrow))
-                    {
-                        OnClickAct(1);
-                    }
-                    else if (Input.GetKeyDown(KeyCode.LeftArrow))
-                    {
-                        OnClickAct(0);
-                    }
+                    OnClickAct(0);
                 }
-                else if (Input.GetKeyDown(KeyCode.A))
+                else if (Input.GetKeyDown(KeyCode.D))
                 {
+                    OnClickAct(1);
                 }
+               
             }
-            else
+            else if (PrecedNum==2)
             {
+                WText.enabled = true;
+                UeTileText.enabled = true;
                 WText.text = "←";
                 UeTileText.text = "→";
-                if (Input.GetKeyDown(KeyCode.RightArrow))
+                if (Input.GetKeyDown(KeyCode.LeftArrow))
                 {
-                    if (Input.GetKeyDown(KeyCode.D))
-                    {
-                        OnClickAct(1);
-                    }
-                    else if (Input.GetKeyDown(KeyCode.A))
-                    {
-                        OnClickAct(0);
-                    }
+                    OnClickAct(0);
                 }
-                else if (Input.GetKeyDown(KeyCode.LeftArrow))
+                else if (Input.GetKeyDown(KeyCode.RightArrow))
                 {
-
+                    OnClickAct(1);
                 }
             }
         }
