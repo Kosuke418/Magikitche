@@ -237,6 +237,67 @@ public class MainGameManager : MonoBehaviour
                 AllTiles[0, 1].Number = 0;
                 AllTiles[0, 3].Number = 0;
                 break;
+
+            case 4:
+                for (int FoodNum = 0; FoodNum < 5; FoodNum++)
+                {
+                    if (AllTiles[1, FoodNum].GetComponent<Image>().sprite == null)
+                    {
+                        // AllTiles[1, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 0].GetComponent<Image>().sprite;
+                        AllTiles[1, FoodNum].Number = AllTiles[0, 0].Number;
+                        if (AllTiles[0, 0].GetComponent<Image>().sprite != null)
+                            AllTiles[1, FoodNum].GetComponent<Image>().enabled = true;
+                        break;
+                    }
+
+                }
+                for (int FoodNum = 0; FoodNum < 5; FoodNum++)
+                {
+                    if (AllTiles[2, FoodNum].GetComponent<Image>().sprite == null)
+                    {
+                        // AllTiles[2, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 2].GetComponent<Image>().sprite;
+                        AllTiles[2, FoodNum].Number = AllTiles[0, 1].Number;
+                        if (AllTiles[0, 1].GetComponent<Image>().sprite != null)
+                            AllTiles[2, FoodNum].GetComponent<Image>().enabled = true;
+                        break;
+                    }
+                }
+                AllTiles[0, 0].GetComponent<Image>().sprite = null;
+                AllTiles[0, 1].GetComponent<Image>().sprite = null;
+                AllTiles[0, 0].Number = 0;
+                AllTiles[0, 1].Number = 0;
+                break;
+
+
+            case 5:
+                for (int FoodNum = 0; FoodNum < 5; FoodNum++)
+                {
+                    if (AllTiles[2, FoodNum].GetComponent<Image>().sprite == null)
+                    {
+                        //  AllTiles[2, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 1].GetComponent<Image>().sprite;
+                        AllTiles[2, FoodNum].Number = AllTiles[0, 1].Number;
+                        if (AllTiles[0, 1].GetComponent<Image>().sprite != null)
+                            AllTiles[2, FoodNum].GetComponent<Image>().enabled = true;
+                        break;
+                    }
+
+                }
+                for (int FoodNum = 0; FoodNum < 5; FoodNum++)
+                {
+                    if (AllTiles[1, FoodNum].GetComponent<Image>().sprite == null)
+                    {
+                        // AllTiles[1, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 3].GetComponent<Image>().sprite;
+                        AllTiles[1, FoodNum].Number = AllTiles[0, 0].Number;
+                        if (AllTiles[0, 0].GetComponent<Image>().sprite != null)
+                            AllTiles[1, FoodNum].GetComponent<Image>().enabled = true;
+                        break;
+                    }
+                }
+                AllTiles[0, 1].GetComponent<Image>().sprite = null;
+                AllTiles[0, 0].GetComponent<Image>().sprite = null;
+                AllTiles[0, 1].Number = 0;
+                AllTiles[0, 0].Number = 0;
+                break;
         }
     }
 
@@ -340,11 +401,11 @@ public class MainGameManager : MonoBehaviour
                 UeTileText.text = "D";
                 if (Input.GetKeyDown(KeyCode.A))
                 {
-                    OnClickAct(0);
+                    OnClickAct(4);
                 }
                 else if (Input.GetKeyDown(KeyCode.D))
                 {
-                    OnClickAct(1);
+                    OnClickAct(5);
                 }
                
             }
@@ -356,11 +417,11 @@ public class MainGameManager : MonoBehaviour
                 UeTileText.text = "→";
                 if (Input.GetKeyDown(KeyCode.LeftArrow))
                 {
-                    OnClickAct(0);
+                    OnClickAct(4);
                 }
                 else if (Input.GetKeyDown(KeyCode.RightArrow))
                 {
-                    OnClickAct(1);
+                    OnClickAct(5);
                 }
             }
         }
