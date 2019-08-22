@@ -7,26 +7,33 @@ using UnityEngine.SceneManagement;
 public class Auction : MonoBehaviour
 {
     public int value, player;//playerは現在の先行プレイヤーと入札ターンのプレイヤーの判定に使う。
-    public Text BidValueText;
-    public Text NowValueText;
-    public Text PlayerText;
+    public Text PlayerText, BidValueText, NowValueText, P1ScoreText, P2ScoreText;
     public Image picture1, picture2;
+    public Button ButtonSet;
+    int Turn;
     void Start()
     {
+        if (MainGameManager.P1Score >= MainGameManager.P2Score)
+        {
+            MainGameManager.PrecedNum = 1;
+        }
+        else
+        {
+            MainGameManager.PrecedNum = 2;
+        }
         Debug.Log(value + "スタート");
-        value = 0;
-
-      //int型のplayerはターンプレイヤーの数値を持つ（1Pなら1、2Pなら2）
-      player = MainGameManager.PrecedNum; //playerは先行のプレイヤーであり、ターンプレイヤー
-
-
-        Debug.Log("Player" + player + "が先行権獲得に近いです。");
+        value = 30;
+        //int型のplayerはターンプレイヤーの数値を持つ（1Pなら1、2Pなら2）
+        player = MainGameManager.PrecedNum; //playerは先行のプレイヤーであり、ターンプレイヤー
         this.PlayerText.text = "Player" + player.ToString() + "のターンです";
-
-      //▼ここから食材画像の指定▼
-      picture1.sprite = Library.Instance.Ingreds[MainGameManager.IngredNum1].IngredSprite;
-      picture2.sprite = Library.Instance.Ingreds[MainGameManager.IngredNum2].IngredSprite;
-      //▲ここまで食材画像の指定▼
+        P1ScoreText.text = (MainGameManager.P1Score).ToString();
+        P2ScoreText.text = (MainGameManager.P2Score).ToString();
+        //▼ここから食材画像の指定▼
+        picture1.sprite = Library.Instance.Ingreds[MainGameManager.IngredNum1].IngredSprite;
+        picture2.sprite = Library.Instance.Ingreds[MainGameManager.IngredNum2].IngredSprite;
+        //▲ここまで食材画像の指定▼
+        ButtonSet.Select();
+        Turn = 0;
 
     }
     public void Onclick(int BtonNum)
@@ -61,16 +68,27 @@ public class Auction : MonoBehaviour
         {
             Debug.Log("￥" + this.BidValueText.text + "で落札");
             Debug.Log("決定");
-          if (player == 1)
-          {
-              MainGameManager.PrecedNum = player + 1;
-              MainGameManager.P2Score -= value;
-          }
-          else if (player == 2)
-          {
-              MainGameManager.PrecedNum = player - 1;
-              MainGameManager.P1Score -= value;
-          }
+            if (Turn == 0) {
+                if (player == 1) {
+                    MainGameManager.P1Score -= int.Parse(this.BidValueText.text);
+                    MainGameManager.PrecedNum = player;
+                }
+                else
+                {
+                    MainGameManager.P2Score -= int.Parse(this.BidValueText.text);
+                    MainGameManager.PrecedNum = player;
+                }
+            }
+            else if (player == 1)
+            {
+                MainGameManager.P2Score -= int.Parse(this.BidValueText.text);
+                MainGameManager.PrecedNum = player + 1;
+            }
+            else if (player == 2)
+             {
+                MainGameManager.P1Score -= int.Parse(this.BidValueText.text);
+                MainGameManager.PrecedNum = player - 1;
+            }
 
             //ここで返り値としてP1Score, P2Score（競り勝ったほうからマイナス済みの数値）とplayer（競り勝ったほう）を返す
 
@@ -95,6 +113,7 @@ public class Auction : MonoBehaviour
                 }
                 this.PlayerText.text = "Player" + player.ToString() + "のターンです";
                 //▲仮のプレイヤー
+                Turn++;
             }
             else
             {
@@ -104,6 +123,9 @@ public class Auction : MonoBehaviour
                 value = int.Parse(this.NowValueText.text);
             }
         }
+
+        P1ScoreText.text = (MainGameManager.P1Score).ToString();
+        P2ScoreText.text = (MainGameManager.P2Score).ToString();
         this.NowValueText.text = value.ToString();
         Debug.Log(value + "になりました");
     }

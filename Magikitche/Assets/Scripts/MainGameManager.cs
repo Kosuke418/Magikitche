@@ -363,6 +363,7 @@ public class MainGameManager : MonoBehaviour
                 Player1Ingred = new int[10];
                 Player2Ingred = new int[10];
             }
+
             state = State.secondready;
 
         }
@@ -377,14 +378,9 @@ public class MainGameManager : MonoBehaviour
         }
         else if (state == State.secondchoicefood)
         {
-            if (P1Score >= P2Score)
-            {
-                PrecedNum = 1;
-            }
-            else
-            {
-                PrecedNum = 2;
-            }
+            Debug.Log(P1Score);
+            Debug.Log(P2Score);
+
             if (AllTiles[0, 0].GetComponent<Image>().sprite == null && AllTiles[0, 1].GetComponent<Image>().sprite == null && GameProgress == 0)
             {
                 if (AllTiles[1, 4].GetComponent<Image>().sprite == null&& AllTiles[2, 4].GetComponent<Image>().sprite == null && GameProgress == 0)
@@ -549,6 +545,9 @@ public class MainGameManager : MonoBehaviour
                                 P2Score += 10;
                             break;
                         }
+                        else
+                        {
+                        }
                     }
                 }
             }
@@ -557,6 +556,11 @@ public class MainGameManager : MonoBehaviour
                 if (Result[j].sprite == null)
                 {
                     Result[j].sprite = Batu;
+                    if (j >= 0 && j < 10)
+                        P1Score -= 5;
+                    if (j >= 10 && j < 20)
+                        P2Score -= 5;
+
                     if (GameCount == 1 || GameCount == 2)
                     {
                         Result[0].enabled = true;
