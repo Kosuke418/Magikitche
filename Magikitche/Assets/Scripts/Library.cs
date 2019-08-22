@@ -8,6 +8,8 @@ public class Ingred
 {
     public string IngredName; 
     public Sprite IngredSprite;
+    public int IngredPlusScore;
+    public int IngredMinusScore;
 }
 
 [System.Serializable]

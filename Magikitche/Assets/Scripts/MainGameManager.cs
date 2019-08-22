@@ -540,9 +540,9 @@ public class MainGameManager : MonoBehaviour
                             Result[(h * 10 + g) - 10].sprite = Maru;
                             Result[(h * 10 + g) - 10].enabled = true;
                             if (h == 1)
-                                P1Score += 10;
+                                P1Score += Library.Instance.Ingreds[temp1[j]].IngredPlusScore;
                             if (h == 2)
-                                P2Score += 10;
+                                P2Score += Library.Instance.Ingreds[temp1[j]].IngredPlusScore;
                             break;
                         }
                         else
@@ -557,9 +557,9 @@ public class MainGameManager : MonoBehaviour
                 {
                     Result[j].sprite = Batu;
                     if (j >= 0 && j < 10)
-                        P1Score -= 5;
+                        P1Score -= Library.Instance.Ingreds[AllTiles[1,j%10].Number].IngredMinusScore;
                     if (j >= 10 && j < 20)
-                        P2Score -= 5;
+                        P2Score -= Library.Instance.Ingreds[AllTiles[2,j%10].Number].IngredMinusScore;
 
                     if (GameCount == 1 || GameCount == 2)
                     {
