@@ -9,11 +9,33 @@ public class Auction : MonoBehaviour
     public int value, player;//playerは現在の先行プレイヤーと入札ターンのプレイヤーの判定に使う。
     public Text PlayerText, BidValueText, NowValueText, P1ScoreText, P2ScoreText;
     public Image picture1, picture2;
-    public Button ButtonSet, FoldSet;
+    public Image[] End1 =new Image[3];
+    public Text[] End2 = new Text[2];
+    public Button ButtonSet, FoldSet, EndButton;
+    public Button[] Whitning = new Button[6];
     int Turn;
+    float R, G, B;
 
     void Start()
     {
+        //ここから結果表示画面の不可視化
+        for (int n = 0; n < 3; n++)
+        {
+            R = End1[n].GetComponent<Image>().color.r;
+            G = End1[n].GetComponent<Image>().color.g;
+            B = End1[n].GetComponent<Image>().color.b;
+            End1[n].GetComponent<Image>().color = new Color(R, G, B, 0.0f);
+            Debug.Log(R + " " + G + " " + B);
+        }
+        for (int m = 0; m < 2; m++)
+        {
+            R = End2[m].GetComponent<Text>().color.r;
+            G = End2[m].GetComponent<Text>().color.g;
+            B = End2[m].GetComponent<Text>().color.b;
+            End2[m].GetComponent<Text>().color = new Color(R, G, B, 0.0f);
+        }
+        //ここまで結果表示画面の不可視化
+
         if (MainGameManager.P1Score >= MainGameManager.P2Score)
         {
             MainGameManager.PrecedNum = 1;
@@ -36,6 +58,7 @@ public class Auction : MonoBehaviour
         ButtonSet.Select();
         Turn = 0;
         FoldSet.interactable = false;
+        EndButton.interactable = false;
     }
     public void Onclick(int BtonNum)
     {//消費点の変化を扱う
@@ -73,26 +96,58 @@ public class Auction : MonoBehaviour
                 {
                     MainGameManager.P1Score -= int.Parse(this.BidValueText.text) - 10;
                     MainGameManager.PrecedNum = player;
+                    End2[0].text = "Player"+player+"が"+ (int.Parse(this.BidValueText.text) - 10).ToString() + "点で落札しました";
                 }
                 else
                 {
                     MainGameManager.P2Score -= int.Parse(this.BidValueText.text) - 10;
                     MainGameManager.PrecedNum = player;
+                    End2[0].text = "Player" + player + "が" + (int.Parse(this.BidValueText.text) - 10).ToString() + "点で落札しました";
                 }
             }
             else if (player == 1)
             {
                 MainGameManager.P2Score -= (int.Parse(this.BidValueText.text) - 10);
                 MainGameManager.PrecedNum = player + 1;
+                End2[0].text = "Player" + (player + 1).ToString() + "が" + (int.Parse(this.BidValueText.text) - 10).ToString() + "点で落札しました";
             }
             else if (player == 2)
             {
                 MainGameManager.P1Score -= (int.Parse(this.BidValueText.text) - 10);
                 MainGameManager.PrecedNum = player - 1;
+                End2[0].text = "Player" + (player - 1).ToString() + "が" + (int.Parse(this.BidValueText.text) - 10).ToString() + "点で落札しました";
             }
             //ここで返り値としてP1Score, P2Score（競り勝ったほうからマイナス済みの数値）とplayer（競り勝ったほう）を返す
+
+
             MainGameManager.GameProgress = 1;
-            SceneManager.LoadScene("Main");
+
+
+            //▼ここに入札者名、入札額を表示するプログラム▼
+            //ここから結果表示画面の可視化
+            for (int n = 0; n < 3; n++)
+            {
+                R = End1[n].GetComponent<Image>().color.r;
+                G = End1[n].GetComponent<Image>().color.g;
+                B = End1[n].GetComponent<Image>().color.b;
+                End1[n].GetComponent<Image>().color = new Color(R, G, B, 1.0f);
+                Debug.Log(R + " " + G + " " + B);
+            }
+            for (int m = 0; m < 2; m++)
+            {
+                R = End2[m].GetComponent<Text>().color.r;
+                G = End2[m].GetComponent<Text>().color.g;
+                B = End2[m].GetComponent<Text>().color.b;
+                End2[m].GetComponent<Text>().color = new Color(R, G, B, 1.0f);
+            }
+            for(int i=0; i < 6; i++)
+            {
+                Whitning[i].interactable = false;
+            }
+            EndButton.interactable = true;
+            EndButton.Select();
+            //ここまで結果表示画面の可視化
+            //▲ここに入札者名、入札額を表示するプログラム▲
         }
         else if (BtonNum == 5)
         {
@@ -129,5 +184,11 @@ public class Auction : MonoBehaviour
         P2ScoreText.text = (MainGameManager.P2Score).ToString();
         this.NowValueText.text = value.ToString();
         Debug.Log(value + "になりました");
+    }
+    public void EndClick()
+    {
+        MainGameManager.GenerateStop = true;
+        //MainGameManager.GameProgress = 1;
+        SceneManager.LoadScene("Main");
     }
 }

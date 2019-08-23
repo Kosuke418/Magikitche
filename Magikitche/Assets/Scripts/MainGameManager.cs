@@ -16,7 +16,7 @@ public class MainGameManager : MonoBehaviour
     private int t;
     private int count = 0;
     private int[] temp1 = new int[100];
-    private bool GenerateStop;
+    public static bool GenerateStop;
     public static int P1Score = 100;
     public static int P2Score = 100;
     public static int GameCount = 0;
@@ -90,6 +90,7 @@ public class MainGameManager : MonoBehaviour
         }
         ScoreText1.text = P1Score.ToString();
         ScoreText2.text = P2Score.ToString();
+        Debug.Log("Start"+GameProgress);
     }
 
     private IEnumerator DelayGenerate(int num, float waitTime)
@@ -349,6 +350,7 @@ public class MainGameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(state);
         for (int i = 0; i < 24; i++)
         {
             if (i >= 0 && i < 4)
