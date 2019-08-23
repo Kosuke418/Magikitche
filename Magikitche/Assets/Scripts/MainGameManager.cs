@@ -101,6 +101,13 @@ public class MainGameManager : MonoBehaviour
         GenerateStop = true;
     }
 
+    private IEnumerator DelayDialog(float waitTime)
+    {
+        DialogText.text = "GM「正解の料理は" + Library.Instance.Categorys[temp].Foods[temp2].FoodName + "でした！」";
+        yield return new WaitForSeconds(waitTime);
+        DialogText.text = "GM「Aボタンで採点します！」";
+    }
+
     void Generate(int num)
     {
         Tile[] LineOfTiles;
@@ -132,20 +139,17 @@ public class MainGameManager : MonoBehaviour
                 {
                     if (AllTiles[1, FoodNum].GetComponent<Image>().sprite == null)
                     {
-                       // AllTiles[1, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 0].GetComponent<Image>().sprite;
                         AllTiles[1, FoodNum].Number = AllTiles[0, 0].Number;
                         AllTiles[0, 0].Number = 0;
                         if (AllTiles[0, 0].GetComponent<Image>().sprite!=null)
                              AllTiles[1, FoodNum].GetComponent<Image>().enabled = true;
                         break;
                     }
-
                 }
                 for (int FoodNum = 0; FoodNum < 10; FoodNum++)
                 {
                     if (AllTiles[2, FoodNum].GetComponent<Image>().sprite == null)
                     {
-                       // AllTiles[2, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 2].GetComponent<Image>().sprite;
                         AllTiles[2, FoodNum].Number = AllTiles[0, 2].Number;
                         AllTiles[0, 2].Number = 0;
                         if (AllTiles[0, 2].GetComponent<Image>().sprite != null)
@@ -165,7 +169,6 @@ public class MainGameManager : MonoBehaviour
                 {
                     if (AllTiles[2, FoodNum].GetComponent<Image>().sprite == null)
                     {
-                      //  AllTiles[2, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 1].GetComponent<Image>().sprite;
                         AllTiles[2, FoodNum].Number = AllTiles[0, 1].Number;
                         AllTiles[0, 1].Number = 0;
                         if (AllTiles[0, 1].GetComponent<Image>().sprite != null)
@@ -178,7 +181,6 @@ public class MainGameManager : MonoBehaviour
                 {
                     if (AllTiles[1, FoodNum].GetComponent<Image>().sprite == null)
                     {
-                       // AllTiles[1, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 3].GetComponent<Image>().sprite;
                         AllTiles[1, FoodNum].Number = AllTiles[0, 3].Number;
                         AllTiles[0, 3].Number = 0;
                         if (AllTiles[0, 3].GetComponent<Image>().sprite != null)
@@ -198,7 +200,6 @@ public class MainGameManager : MonoBehaviour
                 {
                     if (AllTiles[1, FoodNum].GetComponent<Image>().sprite == null)
                     {
-                      //  AllTiles[1, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 2].GetComponent<Image>().sprite;
                         AllTiles[1, FoodNum].Number = AllTiles[0, 2].Number;
                         AllTiles[0, 2].Number = 0;
                         if (AllTiles[0, 2].GetComponent<Image>().sprite != null)
@@ -211,7 +212,6 @@ public class MainGameManager : MonoBehaviour
                 {
                     if (AllTiles[2, FoodNum].GetComponent<Image>().sprite == null)
                     {
-                      //  AllTiles[2, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 0].GetComponent<Image>().sprite;
                         AllTiles[2, FoodNum].Number = AllTiles[0, 0].Number;
                         AllTiles[0, 0].Number = 0;
                         if (AllTiles[0, 0].GetComponent<Image>().sprite != null)
@@ -231,7 +231,6 @@ public class MainGameManager : MonoBehaviour
                 {
                     if (AllTiles[2, FoodNum].GetComponent<Image>().sprite == null)
                     {
-                      //  AllTiles[2, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 3].GetComponent<Image>().sprite;
                         AllTiles[2, FoodNum].Number = AllTiles[0, 3].Number;
                         AllTiles[0, 3].Number = 0;
                         if (AllTiles[0, 3].GetComponent<Image>().sprite != null)
@@ -244,7 +243,6 @@ public class MainGameManager : MonoBehaviour
                 {
                     if (AllTiles[1, FoodNum].GetComponent<Image>().sprite == null)
                     {
-                      //  AllTiles[1, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 1].GetComponent<Image>().sprite;
                         AllTiles[1, FoodNum].Number = AllTiles[0, 1].Number;
                         AllTiles[0, 1].Number = 0;
                         if (AllTiles[0, 1].GetComponent<Image>().sprite != null)
@@ -263,7 +261,6 @@ public class MainGameManager : MonoBehaviour
                 {
                     if (AllTiles[1, FoodNum].GetComponent<Image>().sprite == null && Player1Ingred[FoodNum] == 0)
                     {
-                        // AllTiles[1, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 0].GetComponent<Image>().sprite;
                         AllTiles[1, FoodNum].Number = AllTiles[0, 0].Number;
                         Player1Ingred[FoodNum] = AllTiles[0, 0].Number;
                         AllTiles[0, 0].Number = 0;
@@ -277,7 +274,6 @@ public class MainGameManager : MonoBehaviour
                 {
                     if (AllTiles[2, FoodNum].GetComponent<Image>().sprite == null && Player2Ingred[FoodNum] == 0)
                     {
-                        // AllTiles[2, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 2].GetComponent<Image>().sprite;
                         AllTiles[2, FoodNum].Number = AllTiles[0, 1].Number;
                         Player2Ingred[FoodNum] = AllTiles[0, 1].Number;
                         AllTiles[0, 1].Number = 0;
@@ -298,7 +294,6 @@ public class MainGameManager : MonoBehaviour
                 {
                     if (AllTiles[2, FoodNum].GetComponent<Image>().sprite == null && Player2Ingred[FoodNum] == 0)
                     {
-                        //  AllTiles[2, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 1].GetComponent<Image>().sprite;
                         AllTiles[2, FoodNum].Number = AllTiles[0, 1].Number;
                         Player2Ingred[FoodNum] = AllTiles[0, 1].Number;
                         AllTiles[0, 1].Number = 0;
@@ -312,7 +307,6 @@ public class MainGameManager : MonoBehaviour
                 {
                     if (AllTiles[1, FoodNum].GetComponent<Image>().sprite == null && Player1Ingred[FoodNum] == 0)
                     {
-                        // AllTiles[1, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 3].GetComponent<Image>().sprite;
                         AllTiles[1, FoodNum].Number = AllTiles[0, 0].Number;
                         Player1Ingred[FoodNum] = AllTiles[0, 0].Number;
                         AllTiles[0, 0].Number = 0;
@@ -403,7 +397,6 @@ public class MainGameManager : MonoBehaviour
                 }
             }
         }
-        //Debug.Log(state);
         if (GameCount == 3)
         {
             DialogPanel.enabled = true;
@@ -605,8 +598,21 @@ public class MainGameManager : MonoBehaviour
         else if (state == State.result)
         {
             // Debug.Log("results");
+            if (count == 0)
+            {
+                DialogPanel.enabled = true;
+                DialogText.enabled = true;
+                DialogText.text = "GM「Spaceボタンを押すと正解の料理を発表！」";
+            }else if (count == 1)
+            {
+                DialogPanel.enabled = true;
+                DialogText.enabled = true;
+                StartCoroutine(DelayDialog(1f));
+            }
             if (Input.GetKeyDown(KeyCode.Space) && count == 0)
             {
+                DialogPanel.enabled = false;
+                DialogText.enabled = false;
                 temp2 = Random.Range(0, 3);
                 ResultFood.GetComponent<Image>().sprite = Library.Instance.Categorys[temp].Foods[temp2].FoodSprite;
                 ResultPanel.enabled = true;
@@ -628,6 +634,8 @@ public class MainGameManager : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.A) && count == 1)
             {
+                DialogPanel.enabled = false;
+                DialogText.enabled = false;
                 ResultPanel.enabled = false;
                 ResultFood.enabled = false;
                 for (int i = 0; i < 8; i++)
