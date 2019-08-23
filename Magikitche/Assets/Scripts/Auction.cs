@@ -38,11 +38,11 @@ public class Auction : MonoBehaviour
 
         if (MainGameManager.P1Score >= MainGameManager.P2Score)
         {
-            MainGameManager.PrecedNum = 1;
+            MainGameManager.PrecedNum = 2;
         }
         else
         {
-            MainGameManager.PrecedNum = 2;
+            MainGameManager.PrecedNum = 1;
         }
         Debug.Log(value + "スタート");
         value = 30;
@@ -120,8 +120,6 @@ public class Auction : MonoBehaviour
             //ここで返り値としてP1Score, P2Score（競り勝ったほうからマイナス済みの数値）とplayer（競り勝ったほう）を返す
 
 
-            MainGameManager.GameProgress = 1;
-
 
             //▼ここに入札者名、入札額を表示するプログラム▼
             //ここから結果表示画面の可視化
@@ -188,7 +186,7 @@ public class Auction : MonoBehaviour
     public void EndClick()
     {
         MainGameManager.GenerateStop = true;
-        //MainGameManager.GameProgress = 1;
+        MainGameManager.GameProgress = 1;
         SceneManager.LoadScene("Main");
     }
 }

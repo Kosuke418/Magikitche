@@ -27,6 +27,8 @@ public class MainGameManager : MonoBehaviour
     public static int[] Player1Ingred = new int[10];
     public static int[] Player2Ingred = new int[10];
 
+    public Image[] AuctionBotun;
+    public Text[] AuctionBotunText;
     public Text[] PlusScoreText;
     public Text[] MinusScoreText;
     public Image DialogPanel;
@@ -463,6 +465,11 @@ public class MainGameManager : MonoBehaviour
                 DialogText.enabled = true;
                 if (P1Score >= P2Score)
                 {
+                    for (int i = 0; i < 2; i++)
+                    {
+                        AuctionBotun[i].enabled = true;
+                        AuctionBotunText[i].enabled = true;
+                    }
                     DialogText.text = "GM「↑ボタンを押すとオークション！↓ボタンを押すとPlayer" + 1 + "が先行で食材が選べるよ！";
                     if (Input.GetKeyDown(KeyCode.UpArrow))
                     {
@@ -485,6 +492,11 @@ public class MainGameManager : MonoBehaviour
                 }
                 else
                 {
+                    for (int i = 2; i < 4; i++)
+                    {
+                        AuctionBotun[i].enabled = true;
+                        AuctionBotunText[i].enabled = true;
+                    }
                     DialogText.text = "GM「Wボタンを押すとオークション！Sボタンを押すとPlayer" + 2 + "が先行で食材が選べるよ！";
                     if (Input.GetKeyDown(KeyCode.W))
                     {
