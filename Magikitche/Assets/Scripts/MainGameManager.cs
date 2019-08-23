@@ -27,6 +27,8 @@ public class MainGameManager : MonoBehaviour
     public static int[] Player1Ingred = new int[10];
     public static int[] Player2Ingred = new int[10];
 
+    public Text[] PlusScoreText;
+    public Text[] MinusScoreText;
     public Image DialogPanel;
     public Text DialogText;
     public Text OdaiText;
@@ -132,6 +134,7 @@ public class MainGameManager : MonoBehaviour
                     {
                        // AllTiles[1, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 0].GetComponent<Image>().sprite;
                         AllTiles[1, FoodNum].Number = AllTiles[0, 0].Number;
+                        AllTiles[0, 0].Number = 0;
                         if (AllTiles[0, 0].GetComponent<Image>().sprite!=null)
                              AllTiles[1, FoodNum].GetComponent<Image>().enabled = true;
                         break;
@@ -144,6 +147,7 @@ public class MainGameManager : MonoBehaviour
                     {
                        // AllTiles[2, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 2].GetComponent<Image>().sprite;
                         AllTiles[2, FoodNum].Number = AllTiles[0, 2].Number;
+                        AllTiles[0, 2].Number = 0;
                         if (AllTiles[0, 2].GetComponent<Image>().sprite != null)
                             AllTiles[2, FoodNum].GetComponent<Image>().enabled = true;
                         break;
@@ -163,6 +167,7 @@ public class MainGameManager : MonoBehaviour
                     {
                       //  AllTiles[2, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 1].GetComponent<Image>().sprite;
                         AllTiles[2, FoodNum].Number = AllTiles[0, 1].Number;
+                        AllTiles[0, 1].Number = 0;
                         if (AllTiles[0, 1].GetComponent<Image>().sprite != null)
                             AllTiles[2, FoodNum].GetComponent<Image>().enabled = true;
                         break;
@@ -175,6 +180,7 @@ public class MainGameManager : MonoBehaviour
                     {
                        // AllTiles[1, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 3].GetComponent<Image>().sprite;
                         AllTiles[1, FoodNum].Number = AllTiles[0, 3].Number;
+                        AllTiles[0, 3].Number = 0;
                         if (AllTiles[0, 3].GetComponent<Image>().sprite != null)
                             AllTiles[1, FoodNum].GetComponent<Image>().enabled = true;
                         break;
@@ -194,6 +200,7 @@ public class MainGameManager : MonoBehaviour
                     {
                       //  AllTiles[1, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 2].GetComponent<Image>().sprite;
                         AllTiles[1, FoodNum].Number = AllTiles[0, 2].Number;
+                        AllTiles[0, 2].Number = 0;
                         if (AllTiles[0, 2].GetComponent<Image>().sprite != null)
                             AllTiles[1, FoodNum].GetComponent<Image>().enabled = true;
                         break;
@@ -206,6 +213,7 @@ public class MainGameManager : MonoBehaviour
                     {
                       //  AllTiles[2, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 0].GetComponent<Image>().sprite;
                         AllTiles[2, FoodNum].Number = AllTiles[0, 0].Number;
+                        AllTiles[0, 0].Number = 0;
                         if (AllTiles[0, 0].GetComponent<Image>().sprite != null)
                             AllTiles[2, FoodNum].GetComponent<Image>().enabled = true;
                         break;
@@ -225,6 +233,7 @@ public class MainGameManager : MonoBehaviour
                     {
                       //  AllTiles[2, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 3].GetComponent<Image>().sprite;
                         AllTiles[2, FoodNum].Number = AllTiles[0, 3].Number;
+                        AllTiles[0, 3].Number = 0;
                         if (AllTiles[0, 3].GetComponent<Image>().sprite != null)
                             AllTiles[2, FoodNum].GetComponent<Image>().enabled = true;
                         break;
@@ -237,6 +246,7 @@ public class MainGameManager : MonoBehaviour
                     {
                       //  AllTiles[1, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 1].GetComponent<Image>().sprite;
                         AllTiles[1, FoodNum].Number = AllTiles[0, 1].Number;
+                        AllTiles[0, 1].Number = 0;
                         if (AllTiles[0, 1].GetComponent<Image>().sprite != null)
                             AllTiles[1, FoodNum].GetComponent<Image>().enabled = true;
                         break;
@@ -256,6 +266,7 @@ public class MainGameManager : MonoBehaviour
                         // AllTiles[1, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 0].GetComponent<Image>().sprite;
                         AllTiles[1, FoodNum].Number = AllTiles[0, 0].Number;
                         Player1Ingred[FoodNum] = AllTiles[0, 0].Number;
+                        AllTiles[0, 0].Number = 0;
                         if (AllTiles[0, 0].GetComponent<Image>().sprite != null)
                             AllTiles[1, FoodNum].GetComponent<Image>().enabled = true;
                         break;
@@ -269,6 +280,7 @@ public class MainGameManager : MonoBehaviour
                         // AllTiles[2, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 2].GetComponent<Image>().sprite;
                         AllTiles[2, FoodNum].Number = AllTiles[0, 1].Number;
                         Player2Ingred[FoodNum] = AllTiles[0, 1].Number;
+                        AllTiles[0, 1].Number = 0;
                         if (AllTiles[0, 1].GetComponent<Image>().sprite != null)
                             AllTiles[2, FoodNum].GetComponent<Image>().enabled = true;
                         break;
@@ -289,6 +301,7 @@ public class MainGameManager : MonoBehaviour
                         //  AllTiles[2, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 1].GetComponent<Image>().sprite;
                         AllTiles[2, FoodNum].Number = AllTiles[0, 1].Number;
                         Player2Ingred[FoodNum] = AllTiles[0, 1].Number;
+                        AllTiles[0, 1].Number = 0;
                         if (AllTiles[0, 1].GetComponent<Image>().sprite != null)
                             AllTiles[2, FoodNum].GetComponent<Image>().enabled = true;
                         break;
@@ -302,6 +315,7 @@ public class MainGameManager : MonoBehaviour
                         // AllTiles[1, FoodNum].GetComponent<Image>().sprite = AllTiles[0, 3].GetComponent<Image>().sprite;
                         AllTiles[1, FoodNum].Number = AllTiles[0, 0].Number;
                         Player1Ingred[FoodNum] = AllTiles[0, 0].Number;
+                        AllTiles[0, 0].Number = 0;
                         if (AllTiles[0, 0].GetComponent<Image>().sprite != null)
                             AllTiles[1, FoodNum].GetComponent<Image>().enabled = true;
                         break;
@@ -341,6 +355,54 @@ public class MainGameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        for (int i = 0; i < 24; i++)
+        {
+            if (i >= 0 && i < 4)
+            {
+                if (AllTiles[0, i].Number != 0)
+                {
+                    PlusScoreText[i].enabled = true;
+                    MinusScoreText[i].enabled = true;
+                    PlusScoreText[i].text = Library.Instance.Ingreds[AllTiles[0, i].Number].IngredPlusScore.ToString();
+                    MinusScoreText[i].text = Library.Instance.Ingreds[AllTiles[0, i].Number].IngredMinusScore.ToString();
+                }
+                else
+                {
+                    PlusScoreText[i].enabled = false;
+                    MinusScoreText[i].enabled = false;
+                }
+            }
+            if (i >= 4 && i < 14)
+            {
+                if (AllTiles[1, i-4].Number != 0)
+                {
+                    PlusScoreText[i].enabled = true;
+                    MinusScoreText[i].enabled = true;
+                    PlusScoreText[i].text = Library.Instance.Ingreds[AllTiles[1, i-4].Number].IngredPlusScore.ToString();
+                    MinusScoreText[i].text = Library.Instance.Ingreds[AllTiles[1, i-4].Number].IngredMinusScore.ToString();
+                }
+                else
+                {
+                    PlusScoreText[i].enabled = false;
+                    MinusScoreText[i].enabled = false;
+                }
+            }
+            if (i >= 14 && i < 24)
+            {
+                if (AllTiles[2, i-14].Number != 0)
+                {
+                    PlusScoreText[i].enabled = true;
+                    MinusScoreText[i].enabled = true;
+                    PlusScoreText[i].text = Library.Instance.Ingreds[AllTiles[2, i-14].Number].IngredPlusScore.ToString();
+                    MinusScoreText[i].text = Library.Instance.Ingreds[AllTiles[2, i-14].Number].IngredMinusScore.ToString();
+                }
+                else
+                {
+                    PlusScoreText[i].enabled = false;
+                    MinusScoreText[i].enabled = false;
+                }
+            }
+        }
         //Debug.Log(state);
         if (GameCount == 3)
         {
@@ -605,9 +667,9 @@ public class MainGameManager : MonoBehaviour
                 {
                     Result[j].sprite = Batu;
                     if (j >= 0 && j < 10)
-                        P1Score -= Library.Instance.Ingreds[AllTiles[1,j%10].Number].IngredMinusScore;
+                        P1Score += Library.Instance.Ingreds[AllTiles[1,j%10].Number].IngredMinusScore;
                     if (j >= 10 && j < 20)
-                        P2Score -= Library.Instance.Ingreds[AllTiles[2,j%10].Number].IngredMinusScore;
+                        P2Score += Library.Instance.Ingreds[AllTiles[2,j%10].Number].IngredMinusScore;
 
                     if (GameCount == 1 || GameCount == 2)
                     {
