@@ -16,6 +16,7 @@ public class MainGameManager : MonoBehaviour
     private int t;
     private int count = 0;
     private int[] temp1 = new int[100];
+    private bool GenerateStop;
     public static int P1Score = 100;
     public static int P2Score = 100;
     public static int GameCount = 0;
@@ -87,6 +88,15 @@ public class MainGameManager : MonoBehaviour
         }
         ScoreText1.text = P1Score.ToString();
         ScoreText2.text = P2Score.ToString();
+    }
+
+    private IEnumerator DelayGenerate(int num, float waitTime)
+    {
+        GenerateStop = false;
+        yield return new WaitForSeconds(waitTime);
+        Generate(num);
+        yield return new WaitForSeconds(waitTime);
+        GenerateStop = true;
     }
 
     void Generate(int num)
@@ -319,10 +329,6 @@ public class MainGameManager : MonoBehaviour
                 Debug.Log("Start");
             else
             {
-				// Debug.Log("STOP");
-				//Debug.Log(temp);
-				//Debug.Log(Library.Instance.Categorys[temp].CategoryName);
-				//Debug.Log(Library.Instance.Categorys[temp].Foods[temp2].FoodName);
 				if (GameCount == 0)
 					state = State.choicefood;
                 else
@@ -377,20 +383,14 @@ public class MainGameManager : MonoBehaviour
         }
         else if (state == State.secondchoicefood)
         {
-            Debug.Log(P1Score);
-            Debug.Log(P2Score);
-
             if (AllTiles[0, 0].GetComponent<Image>().sprite == null && AllTiles[0, 1].GetComponent<Image>().sprite == null && GameProgress == 0)
             {
-                if (AllTiles[1, 4].GetComponent<Image>().sprite == null&& AllTiles[2, 4].GetComponent<Image>().sprite == null && GameProgress == 0)
+                if (AllTiles[1, 4].GetComponent<Image>().sprite == null && AllTiles[2, 4].GetComponent<Image>().sprite == null && GameProgress == 0)
                 {
-                    Generate(2);
-                    IngredNum1 = AllTiles[0, 0].Number;
-                    IngredNum2 = AllTiles[0, 1].Number;
-                    //Debug.Log(AllTiles[0, 0].Number);
-                    //Debug.Log(AllTiles[0, 1].Number);
+                    WText.enabled = false;
+                    UeTileText.enabled = false;
+                    StartCoroutine(DelayGenerate(2, 0.5f));
                     GameProgress = 0;
-                    SceneManager.LoadScene("AuctionScene");
                 }
                 else
                 {
@@ -398,37 +398,58 @@ public class MainGameManager : MonoBehaviour
                     state = State.result;
                 }
             }
-            if (PrecedNum==1 && GameProgress==1)
+            else if (GameProgress == 0)
             {
-                AllTiles[0, 0].Number = IngredNum1;
-                AllTiles[0, 1].Number = IngredNum2;
-                STileText.enabled = false;
-                ShitaTileText.enabled = false;
-                STile.enabled = false;
-                ShitaTile.enabled = false;
-                WText.enabled = true;
-                UeTileText.enabled = true;
-                WText.text = "A";
-                UeTileText.text = "D";
-                if (Input.GetKeyDown(KeyCode.A))
+                IngredNum1 = AllTiles[0, 0].Number;
+                IngredNum2 = AllTiles[0, 1].Number;
+                DialogPanel.enabled = true;
+                DialogText.enabled = true;
+                if (P1Score >= P2Score)
                 {
-                    OnClickAct(4);
-                    GameProgress = 0;
+                    DialogText.text = "GM「↑ボタンを押すとオークション！↓ボタンを押すとPlayer" + 1 + "が先行で食材が選べるよ！";
+                    if (Input.GetKeyDown(KeyCode.UpArrow))
+                    {
+                        SceneManager.LoadScene("AuctionScene");
+                    }
+                    if (Input.GetKeyDown(KeyCode.DownArrow))
+                    {
+                        DialogPanel.enabled = true;
+                        DialogText.enabled = false;
+                        GameProgress = 1;
+                        if (P1Score >= P2Score)
+                        {
+                            PrecedNum = 1;
+                        }
+                        else
+                        {
+                            PrecedNum = 2;
+                        }
+                    }
                 }
-                else if (Input.GetKeyDown(KeyCode.D))
+                else
                 {
-                    OnClickAct(5);
-                    GameProgress = 0;
-                }
-                for (int i = 0; i < 5; i++)
-                {
-                    if (Player1Ingred[i] != 0)
-                        AllTiles[1, i].Number = Player1Ingred[i];
-                    if (Player2Ingred[i] != 0)
-                        AllTiles[2, i].Number = Player2Ingred[i];
+                    DialogText.text = "GM「Wボタンを押すとオークション！Sボタンを押すとPlayer" + 2 + "が先行で食材が選べるよ！";
+                    if (Input.GetKeyDown(KeyCode.W))
+                    {
+                        SceneManager.LoadScene("AuctionScene");
+                    }
+                    if (Input.GetKeyDown(KeyCode.S))
+                    {
+                        DialogPanel.enabled = true;
+                        DialogText.enabled = false;
+                        GameProgress = 1;
+                        if (P1Score >= P2Score)
+                        {
+                            PrecedNum = 1;
+                        }
+                        else
+                        {
+                            PrecedNum = 2;
+                        }
+                    }
                 }
             }
-            else if (PrecedNum==2 && GameProgress==1)
+            if (GameProgress == 1)
             {
                 AllTiles[0, 0].Number = IngredNum1;
                 AllTiles[0, 1].Number = IngredNum2;
@@ -438,24 +459,49 @@ public class MainGameManager : MonoBehaviour
                 ShitaTile.enabled = false;
                 WText.enabled = true;
                 UeTileText.enabled = true;
-                WText.text = "←";
-                UeTileText.text = "→";
-                if (Input.GetKeyDown(KeyCode.LeftArrow))
+                if (PrecedNum == 1)
                 {
-                    OnClickAct(4);
-                    GameProgress = 0;
+                    WText.text = "A";
+                    UeTileText.text = "D";
+                    if (Input.GetKeyDown(KeyCode.A))
+                    {
+                        OnClickAct(4);
+                        GameProgress = 0;
+                    }
+                    else if (Input.GetKeyDown(KeyCode.D))
+                    {
+                        OnClickAct(5);
+                        GameProgress = 0;
+                    }
+                    for (int i = 0; i < 5; i++)
+                    {
+                        if (Player1Ingred[i] != 0)
+                            AllTiles[1, i].Number = Player1Ingred[i];
+                        if (Player2Ingred[i] != 0)
+                            AllTiles[2, i].Number = Player2Ingred[i];
+                    }
                 }
-                else if (Input.GetKeyDown(KeyCode.RightArrow))
+                else if (PrecedNum == 2)
                 {
-                    OnClickAct(5);
-                    GameProgress = 0;
-                }
-                for (int i = 0; i < 5; i++)
-                {
-                    if (Player1Ingred[i] != 0)
-                        AllTiles[1, i].Number = Player1Ingred[i];
-                    if (Player2Ingred[i] != 0)
-                        AllTiles[2, i].Number = Player2Ingred[i];
+                    WText.text = "←";
+                    UeTileText.text = "→";
+                    if (Input.GetKeyDown(KeyCode.LeftArrow))
+                    {
+                        OnClickAct(4);
+                        GameProgress = 0;
+                    }
+                    else if (Input.GetKeyDown(KeyCode.RightArrow))
+                    {
+                        OnClickAct(5);
+                        GameProgress = 0;
+                    }
+                    for (int i = 0; i < 5; i++)
+                    {
+                        if (Player1Ingred[i] != 0)
+                            AllTiles[1, i].Number = Player1Ingred[i];
+                        if (Player2Ingred[i] != 0)
+                            AllTiles[2, i].Number = Player2Ingred[i];
+                    }
                 }
             }
             
@@ -466,7 +512,7 @@ public class MainGameManager : MonoBehaviour
             {
                 if (AllTiles[1, 9].GetComponent<Image>().sprite == null&& AllTiles[2, 9].GetComponent<Image>().sprite == null)
                 {
-                    Generate(4);
+                    StartCoroutine(DelayGenerate(4,0.5f));
                 }
                 else
                 {
@@ -474,21 +520,24 @@ public class MainGameManager : MonoBehaviour
                     state = State.result;
                 }
             }
-            if (Input.GetKeyDown(KeyCode.UpArrow))
+            if (GenerateStop == true)
             {
-                OnClickAct(1);
-            }
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                OnClickAct(3);
-            }
-            else if (Input.GetKeyDown(KeyCode.W))
-            {
-                OnClickAct(0);
-            }
-            else if (Input.GetKeyDown(KeyCode.S))
-            {
-                OnClickAct(2);
+                if (Input.GetKeyDown(KeyCode.UpArrow))
+                {
+                    OnClickAct(1);
+                }
+                else if (Input.GetKeyDown(KeyCode.DownArrow))
+                {
+                    OnClickAct(3);
+                }
+                else if (Input.GetKeyDown(KeyCode.W))
+                {
+                    OnClickAct(0);
+                }
+                else if (Input.GetKeyDown(KeyCode.S))
+                {
+                    OnClickAct(2);
+                }
             }
         }
         else if (state == State.result)

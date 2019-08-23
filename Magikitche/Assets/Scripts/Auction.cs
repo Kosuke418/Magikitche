@@ -9,8 +9,9 @@ public class Auction : MonoBehaviour
     public int value, player;//playerは現在の先行プレイヤーと入札ターンのプレイヤーの判定に使う。
     public Text PlayerText, BidValueText, NowValueText, P1ScoreText, P2ScoreText;
     public Image picture1, picture2;
-    public Button ButtonSet;
+    public Button ButtonSet, FoldSet;
     int Turn;
+
     void Start()
     {
         if (MainGameManager.P1Score >= MainGameManager.P2Score)
@@ -34,7 +35,7 @@ public class Auction : MonoBehaviour
         //▲ここまで食材画像の指定▼
         ButtonSet.Select();
         Turn = 0;
-
+        FoldSet.interactable = false;
     }
     public void Onclick(int BtonNum)
     {//消費点の変化を扱う
@@ -49,7 +50,7 @@ public class Auction : MonoBehaviour
         else if (BtonNum == 2)
         {
             value -= 100;
-            if (int.Parse(this.NowValueText.text) <= int.Parse(this.BidValueText.text))
+            if (value <= int.Parse(this.BidValueText.text))
             {
                 this.NowValueText.text = this.BidValueText.text;
                 value = int.Parse(this.NowValueText.text);
@@ -58,7 +59,7 @@ public class Auction : MonoBehaviour
         else if (BtonNum == 3)
         {
             value -= 10;
-            if (int.Parse(this.NowValueText.text) <= int.Parse(this.BidValueText.text))
+            if (value <= int.Parse(this.BidValueText.text))
             {
                 this.NowValueText.text = this.BidValueText.text;
                 value = int.Parse(this.NowValueText.text);
@@ -66,43 +67,41 @@ public class Auction : MonoBehaviour
         }
         else if (BtonNum == 4)
         {
-            Debug.Log("￥" + this.BidValueText.text + "で落札");
-            Debug.Log("決定");
-            if (Turn == 0) {
-                if (player == 1) {
-                    MainGameManager.P1Score -= int.Parse(this.BidValueText.text);
+            if (Turn == 0)
+            {
+                if (player == 1)
+                {
+                    MainGameManager.P1Score -= int.Parse(this.BidValueText.text) - 10;
                     MainGameManager.PrecedNum = player;
                 }
                 else
                 {
-                    MainGameManager.P2Score -= int.Parse(this.BidValueText.text);
+                    MainGameManager.P2Score -= int.Parse(this.BidValueText.text) - 10;
                     MainGameManager.PrecedNum = player;
                 }
             }
             else if (player == 1)
             {
-                MainGameManager.P2Score -= int.Parse(this.BidValueText.text);
+                MainGameManager.P2Score -= (int.Parse(this.BidValueText.text) - 10);
                 MainGameManager.PrecedNum = player + 1;
             }
             else if (player == 2)
-             {
-                MainGameManager.P1Score -= int.Parse(this.BidValueText.text);
+            {
+                MainGameManager.P1Score -= (int.Parse(this.BidValueText.text) - 10);
                 MainGameManager.PrecedNum = player - 1;
             }
-
             //ここで返り値としてP1Score, P2Score（競り勝ったほうからマイナス済みの数値）とplayer（競り勝ったほう）を返す
-
             MainGameManager.GameProgress = 1;
             SceneManager.LoadScene("Main");
         }
         else if (BtonNum == 5)
         {
-            if (int.Parse(this.BidValueText.text) < value)
+            if (int.Parse(this.BidValueText.text) <= value)
             {
-                this.BidValueText.text = value.ToString();
+                FoldSet.interactable = true;
+                this.BidValueText.text = (value+10).ToString();
                 Debug.Log("金額Up");
-
-                //▼仮のプレイヤー
+                Debug.Log("ボタン5:  valueは:"+value + "、 入札金額欄は:"+ BidValueText.text+ "、 入札金額欄は:"+NowValueText.text);
                 if (player == 1)
                 {
                     player = 2;
@@ -112,13 +111,15 @@ public class Auction : MonoBehaviour
                     player = 1;
                 }
                 this.PlayerText.text = "Player" + player.ToString() + "のターンです";
-                //▲仮のプレイヤー
+                this.NowValueText.text = this.BidValueText.text;
+                value = int.Parse(this.NowValueText.text);
                 Turn++;
             }
             else
             {
                 Debug.Log(value);
                 Debug.Log("額が足りない");
+                
                 this.NowValueText.text = this.BidValueText.text;
                 value = int.Parse(this.NowValueText.text);
             }
