@@ -504,58 +504,61 @@ public class MainGameManager : MonoBehaviour
                     }
                 }
             }
-            if (GameProgress == 1)
+            if (GenerateStop == true)
             {
-                AllTiles[0, 0].Number = IngredNum1;
-                AllTiles[0, 1].Number = IngredNum2;
-                STileText.enabled = false;
-                ShitaTileText.enabled = false;
-                STile.enabled = false;
-                ShitaTile.enabled = false;
-                WText.enabled = true;
-                UeTileText.enabled = true;
-                if (PrecedNum == 1)
+                if (GameProgress == 1)
                 {
-                    WText.text = "A";
-                    UeTileText.text = "D";
-                    if (Input.GetKeyDown(KeyCode.A))
+                    AllTiles[0, 0].Number = IngredNum1;
+                    AllTiles[0, 1].Number = IngredNum2;
+                    STileText.enabled = false;
+                    ShitaTileText.enabled = false;
+                    STile.enabled = false;
+                    ShitaTile.enabled = false;
+                    WText.enabled = true;
+                    UeTileText.enabled = true;
+                    if (PrecedNum == 1)
                     {
-                        OnClickAct(4);
-                        GameProgress = 0;
+                        WText.text = "A";
+                        UeTileText.text = "D";
+                        if (Input.GetKeyDown(KeyCode.A))
+                        {
+                            OnClickAct(4);
+                            GameProgress = 0;
+                        }
+                        else if (Input.GetKeyDown(KeyCode.D))
+                        {
+                            OnClickAct(5);
+                            GameProgress = 0;
+                        }
+                        for (int i = 0; i < 5; i++)
+                        {
+                            if (Player1Ingred[i] != 0)
+                                AllTiles[1, i].Number = Player1Ingred[i];
+                            if (Player2Ingred[i] != 0)
+                                AllTiles[2, i].Number = Player2Ingred[i];
+                        }
                     }
-                    else if (Input.GetKeyDown(KeyCode.D))
+                    else if (PrecedNum == 2)
                     {
-                        OnClickAct(5);
-                        GameProgress = 0;
-                    }
-                    for (int i = 0; i < 5; i++)
-                    {
-                        if (Player1Ingred[i] != 0)
-                            AllTiles[1, i].Number = Player1Ingred[i];
-                        if (Player2Ingred[i] != 0)
-                            AllTiles[2, i].Number = Player2Ingred[i];
-                    }
-                }
-                else if (PrecedNum == 2)
-                {
-                    WText.text = "←";
-                    UeTileText.text = "→";
-                    if (Input.GetKeyDown(KeyCode.LeftArrow))
-                    {
-                        OnClickAct(4);
-                        GameProgress = 0;
-                    }
-                    else if (Input.GetKeyDown(KeyCode.RightArrow))
-                    {
-                        OnClickAct(5);
-                        GameProgress = 0;
-                    }
-                    for (int i = 0; i < 5; i++)
-                    {
-                        if (Player1Ingred[i] != 0)
-                            AllTiles[1, i].Number = Player1Ingred[i];
-                        if (Player2Ingred[i] != 0)
-                            AllTiles[2, i].Number = Player2Ingred[i];
+                        WText.text = "←";
+                        UeTileText.text = "→";
+                        if (Input.GetKeyDown(KeyCode.LeftArrow))
+                        {
+                            OnClickAct(4);
+                            GameProgress = 0;
+                        }
+                        else if (Input.GetKeyDown(KeyCode.RightArrow))
+                        {
+                            OnClickAct(5);
+                            GameProgress = 0;
+                        }
+                        for (int i = 0; i < 5; i++)
+                        {
+                            if (Player1Ingred[i] != 0)
+                                AllTiles[1, i].Number = Player1Ingred[i];
+                            if (Player2Ingred[i] != 0)
+                                AllTiles[2, i].Number = Player2Ingred[i];
+                        }
                     }
                 }
             }
