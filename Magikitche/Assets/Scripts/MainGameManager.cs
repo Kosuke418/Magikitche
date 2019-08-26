@@ -326,6 +326,7 @@ public class MainGameManager : MonoBehaviour
         }
     }
 
+    /*
     public void Randomset()
     {
         if (oshita)
@@ -347,6 +348,7 @@ public class MainGameManager : MonoBehaviour
             }
         }
     }
+    */
 
 
     // Update is called once per frame
@@ -413,6 +415,7 @@ public class MainGameManager : MonoBehaviour
                 SceneManager.LoadScene("Result");
             }
         }
+        /*
         else if (state == State.tugi)
         {
 
@@ -427,18 +430,17 @@ public class MainGameManager : MonoBehaviour
                 Player1Ingred = new int[10];
                 Player2Ingred = new int[10];
             }
-
             state = State.secondready;
-
         }
         else if (state == State.secondready)
         {
             Randomset();
 
         }
+        */
         else if (state == State.firstready)
         {
-            Randomset();
+           // Randomset();
         }
         else if (state == State.secondchoicefood)
         {

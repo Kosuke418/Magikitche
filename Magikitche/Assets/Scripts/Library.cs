@@ -17,6 +17,7 @@ public class Food
 {
     public string FoodName;
     public Sprite FoodSprite;
+    public int FoodScore;
     public Answer[] Answers;
 }
 
