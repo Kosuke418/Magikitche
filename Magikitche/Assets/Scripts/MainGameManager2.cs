@@ -21,7 +21,10 @@ public class MainGameManager2 : MonoBehaviour
     public Image Select21;
     public Text timerText;
     public float totalTime;
+    public static int GameProgress;
+    public static int PrecedNum;
     public static int IngredNum;
+    public static int IngredNum2;
     public static int TurnCount = 1;
     public static bool GenerateStop;
     public static int P1Score = 100;
@@ -57,6 +60,11 @@ public class MainGameManager2 : MonoBehaviour
 
         P1 = 0;
         P2 = 1;
+
+        if (GameProgress == 1)
+        {
+            state = State.MakeFood;
+        }
     }
 
     private IEnumerator DelayGenerate(int num, float waitTime)
@@ -192,14 +200,39 @@ public class MainGameManager2 : MonoBehaviour
         }
         else if (state == State.MakeFood)
         {
-            if (P1 == 0 && P2 == 0)
+            if (GameProgress == 1)
+            {
+                for (int FoodNum = 0; FoodNum < 10; FoodNum++)
+                {
+                    if (AllTiles[PrecedNum, FoodNum].Number == 0)
+                    {
+                        AllTiles[PrecedNum, FoodNum].Number = AllTiles[0, 0].Number;
+                        AllTiles[0, 0].Number = 0;
+                        break;
+                    }
+                }
+                for (int FoodNum = 0; FoodNum < 10; FoodNum++)
+                {
+                    if (AllTiles[2, FoodNum].Number == 0)
+                    {
+                        AllTiles[2, FoodNum].Number = AllTiles[0, 1].Number;
+                        AllTiles[0, 1].Number = 0;
+                        break;
+                    }
+                }
+                GameProgress = 0;
+            }
+            else if (P1 == 0 && P2 == 0)
             {
                 IngredNum = AllTiles[0, 0].Number;
+                IngredNum2 = AllTiles[0, 1].Number;
                 SceneManager.LoadScene("AuctionScene");
+                
             }
             else if (P1 == 1 && P2 == 1)
             {
                 IngredNum = AllTiles[0, 1].Number;
+                IngredNum2 = AllTiles[0, 0].Number;
                 SceneManager.LoadScene("AuctionScene");
             }
             else if (P1 == 0 && P2 ==1)
