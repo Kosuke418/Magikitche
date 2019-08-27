@@ -29,6 +29,8 @@ public class MainGameManager2 : MonoBehaviour
     // プレイヤーの所持食材と料理
     public static int[] Player1Ingred = new int[10];
     public static int[] Player2Ingred = new int[10];
+    public static int[] Player1Food = new int[4];
+    public static int[] Player2Food = new int[4];
     public Image[] madeFood1;
     public Image[] madeFood2;
 
@@ -56,6 +58,7 @@ public class MainGameManager2 : MonoBehaviour
     // ステータス
     public enum State
     {
+        Ready,
         Generate,
         Choice,
         MakeFood,
@@ -88,7 +91,7 @@ public class MainGameManager2 : MonoBehaviour
 
         audioSource = gameObject.GetComponent<AudioSource>();
         audioSource.clip = StartVoice;
-        audioSource.Play();
+        // audioSource.Play();
     }
 
     // 食料生成を遅らせる関数
@@ -150,7 +153,14 @@ public class MainGameManager2 : MonoBehaviour
         scoreText1.text = P1Score.ToString();
         scoreText2.text = P2Score.ToString();
 
-        if (state == State.Generate)
+        if (state == State.Ready)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                state = State.Generate;
+            }
+        }
+        else if (state == State.Generate)
         {
             if (AllTiles[0, 0].Number == 0 && AllTiles[0, 1].Number == 0)
             {
@@ -237,6 +247,19 @@ public class MainGameManager2 : MonoBehaviour
                         AllTiles[1, i].Number = Player1Ingred[i];
                     if (Player2Ingred[i] != 0)
                         AllTiles[2, i].Number = Player2Ingred[i];
+                }
+                for (int i = 0; i < 4; i++)
+                {
+                    if (Player1Food[i] != 0)
+                    {
+                        madeFood1[i].enabled = true;
+                        madeFood1[i].sprite = Library.Instance.Foods[Player1Food[i]].FoodSprite;
+                    }
+                    if (Player2Food[i] != 0)
+                    {
+                        madeFood2[i].enabled = true;
+                        madeFood2[i].sprite = Library.Instance.Foods[Player2Food[i]].FoodSprite;
+                    }
                 }
                 if (PrecedNum == 1)
                 {
@@ -387,12 +410,13 @@ public class MainGameManager2 : MonoBehaviour
                     }
                     Debug.Log(Library.Instance.Foods[i].FoodName + "が作れる");
                     P1Score += 100;
-                    for (int FoodNum = 0; FoodNum < 10; FoodNum++)
+                    for (int FoodNum = 0; FoodNum < 4; FoodNum++)
                     {
-                        if (madeFood1[FoodNum].sprite == null)
+                        if (madeFood1[FoodNum].sprite == null && Player1Food[FoodNum] == 0)
                         {
                             madeFood1[FoodNum].enabled = true;
                             madeFood1[FoodNum].sprite = Library.Instance.Foods[i].FoodSprite;
+                            Player1Food[FoodNum] = i;
                             break;
                         }
                     }
@@ -443,13 +467,14 @@ public class MainGameManager2 : MonoBehaviour
                     }
                         // Debug.Log(Library.Instance.Categorys[i].Foods[j].FoodName + "が作れる");
                         P2Score += 100;
-                        for (int FoodNum = 0; FoodNum < 10; FoodNum++)
+                        for (int FoodNum = 0; FoodNum < 4; FoodNum++)
                         {
-                            if (madeFood2[FoodNum].sprite == null)
+                            if (madeFood2[FoodNum].sprite == null && Player2Food[FoodNum] == 0)
                             {
                                 madeFood2[FoodNum].enabled = true;
                                 madeFood2[FoodNum].sprite = Library.Instance.Foods[i].FoodSprite;
-                                break;
+                                Player2Food[FoodNum] = i;
+                            break;
                             }
                         }
                     }
@@ -532,6 +557,8 @@ public class MainGameManager2 : MonoBehaviour
             TurnCount = 0;
             Player1Ingred = new int[10];
             Player2Ingred = new int[10];
+            Player1Food = new int[4];
+            Player2Food = new int[4];
             timerText.enabled = false;
             SceneManager.LoadScene("Main");
         }

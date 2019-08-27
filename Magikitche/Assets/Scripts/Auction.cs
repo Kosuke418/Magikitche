@@ -33,7 +33,6 @@ public class Auction : MonoBehaviour
             G = endImage[count].GetComponent<Image>().color.g;
             B = endImage[count].GetComponent<Image>().color.b;
             endImage[count].GetComponent<Image>().color = new Color(R, G, B, 0.0f);
-            Debug.Log(R + " " + G + " " + B);
         }
         for (int count = 0; count < 2; count++)
         {
@@ -100,6 +99,7 @@ public class Auction : MonoBehaviour
         }
         else if (pcount == 1)
         {
+            audioMoney2.PlayOneShot(soundMoney2);
             if (kamenRider <= 0) {
                 MainGameManager2.GameProgress = 1;
                 SceneManager.LoadScene("Main");
@@ -114,26 +114,21 @@ public class Auction : MonoBehaviour
         textCase[1] = int.Parse(p2BidValueText.text);
         if (bNum == 0)
         {
-            Debug.Log("0の処理");
             if (bidPlayer == 1 && textCase[0] <= textCase[1])
             {
-                Debug.Log("P1の処理0");
                 p1BidValueText.text = (textCase[1] + 10).ToString();
                 audioMoney1.PlayOneShot(soundMoney1);
             }
             else if (bidPlayer == 2 && textCase[0] >= textCase[1])
             {
-                Debug.Log("P2の処理0");
                 p2BidValueText.text = (textCase[0] + 10).ToString();
                 audioMoney1.PlayOneShot(soundMoney1);
             }
         }
         else if (bNum == 1)
         {
-            Debug.Log("1の処理");
             if (bidPlayer == 1 && textCase[0] <= textCase[1])
             {
-                Debug.Log("P1の処理1");
                 p1BidValueText.text = (textCase[1] + 100).ToString();
                 audioMoney1.PlayOneShot(soundMoney1);
             }
@@ -141,7 +136,6 @@ public class Auction : MonoBehaviour
             {
                 if (textCase[1] >= textCase[0])
                 {
-                    Debug.Log("P2の処理1");
                     p2BidValueText.text = (textCase[0] + 100).ToString();
                     audioMoney1.PlayOneShot(soundMoney1);
                 }
@@ -161,7 +155,6 @@ public class Auction : MonoBehaviour
             G = endImage[n].GetComponent<Image>().color.g;
             B = endImage[n].GetComponent<Image>().color.b;
             endImage[n].GetComponent<Image>().color = new Color(R, G, B, 1.0f);
-            Debug.Log(R + " " + G + " " + B);
         }
         for (int m = 0; m < 2; m++)
         {
@@ -180,7 +173,7 @@ public class Auction : MonoBehaviour
             //▲ここに入札者名、入札額を表示するプログラム▲
 
         //SEを流すプログラム
-        audioMoney2.PlayOneShot(soundMoney2);
+
         pcount = 1;
         //時間経過を表示を表示
         kamenRider = 3;
@@ -191,23 +184,19 @@ public class Auction : MonoBehaviour
         if (Input.GetKeyDown("joystick 1 button 4") || Input.GetKeyDown(KeyCode.A))
         {
             Onclick(0, 1);
-            Debug.Log("j1Button4(LB)");
         }
         if (Input.GetKeyDown("joystick 1 button 5") || Input.GetKeyDown(KeyCode.D))
         {
             Onclick(1, 1);
-            Debug.Log("j1Button5(RB)");
         }
 
         if (Input.GetKeyDown("joystick 2 button 4") || Input.GetKeyDown(KeyCode.LeftArrow))
         {
             Onclick(0, 2);
-            Debug.Log("j2Button4(LB)");
         }
         if (Input.GetKeyDown("joystick 2 button 5") || Input.GetKeyDown(KeyCode.RightArrow))
         {
             Onclick(1, 2);
-            Debug.Log("j2Button5(RB)");
         }
     }
 
