@@ -8,8 +8,6 @@ public class Ingred
 {
     public string IngredName; 
     public Sprite IngredSprite;
-    public int IngredPlusScore;
-    public int IngredMinusScore;
 }
 
 [System.Serializable]
@@ -28,19 +26,12 @@ public class Answer
     public string AnswerName;
 }
 
-[System.Serializable]
-public class Category
-{
-    public string CategoryName;
-    public Food[] Foods;
-}
-
 public class Library : MonoBehaviour
 {
     public static Library Instance;
 
     public Ingred[] Ingreds;
-    public Category[] Categorys;
+    public Food[] Foods;
 
     private void Awake()
     {

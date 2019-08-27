@@ -17,11 +17,11 @@ public class Result : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (MainGameManager.P1Score > MainGameManager.P2Score)
+        if (MainGameManager2.P1Score > MainGameManager2.P2Score)
         {
             ResultText.text = "P1の勝ち！";
         }
-        else  if (MainGameManager.P1Score < MainGameManager.P2Score)
+        else  if (MainGameManager2.P1Score < MainGameManager2.P2Score)
         {
             ResultText.text = "P2の勝ち！";
         }

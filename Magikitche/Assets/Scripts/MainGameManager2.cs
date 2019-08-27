@@ -6,36 +6,54 @@ using UnityEngine.SceneManagement;
 
 public class MainGameManager2 : MonoBehaviour
 {
-
+    // 各種タイル
     private Tile[,] AllTiles = new Tile[10, 10];
     private List<Tile> EmptyTiles = new List<Tile>();
-    private List<Tile[]> columns = new List<Tile[]>();
+
+    // プレイヤーのセレクトボタンの位置
     private int P1 = 2;
     private int P2 = 2;
+
+    // タイマー
     int seconds;
     int sseconds;
+    public Text timerText;
+    public float totalTime;
 
+    // セレクトボタン
     public Image select10;
     public Image select11;
     public Image select20;
     public Image select21;
-    public Text timerText;
-    public float totalTime;
+
+    // プレイヤーの所持食材と料理
     public static int[] Player1Ingred = new int[10];
     public static int[] Player2Ingred = new int[10];
+    public Image[] madeFood1;
+    public Image[] madeFood2;
+
+    // 競売に使う変数
     public static int GameProgress;
     public static int PrecedNum;
     public static int IngredNum;
     public static int IngredNum2;
+
+    // ターン
     public static int TurnCount = 1;
-    public static bool GenerateStop;
+
+    // プレイヤーの点数
     public static int P1Score = 100;
     public static int P2Score = 100;
-    public Image[] madeFood1;
-    public Image[] madeFood2;
     public Text scoreText1;
     public Text scoreText2;
 
+    public static bool GenerateStop;
+
+    // オーディオデータ
+    public AudioClip StartVoice;
+    private AudioSource audioSource;
+
+    // ステータス
     public enum State
     {
         Generate,
@@ -67,8 +85,13 @@ public class MainGameManager2 : MonoBehaviour
         {
             state = State.MakeFood;
         }
+
+        audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.clip = StartVoice;
+        audioSource.Play();
     }
 
+    // 食料生成を遅らせる関数
     private IEnumerator DelayGenerate(int num, float waitTime)
     {
         GenerateStop = false;
@@ -78,6 +101,7 @@ public class MainGameManager2 : MonoBehaviour
         GenerateStop = true;
     }
 
+    // 食材生成の関数
     void Generate(int num)
     {
         int start = 1;
@@ -98,6 +122,7 @@ public class MainGameManager2 : MonoBehaviour
         }
     }
 
+    // セレクトボタン移動の関数
     public void OnClickAct(int number)
     {
         switch (number)
@@ -206,6 +231,13 @@ public class MainGameManager2 : MonoBehaviour
         {
             if (GameProgress == 1)
             {
+                for (int i = 0; i < 10; i++)
+                {
+                    if (Player1Ingred[i] != 0)
+                        AllTiles[1, i].Number = Player1Ingred[i];
+                    if (Player2Ingred[i] != 0)
+                        AllTiles[2, i].Number = Player2Ingred[i];
+                }
                 if (PrecedNum == 1)
                 {
                     for (int FoodNum = 0; FoodNum < 10; FoodNum++)
@@ -270,7 +302,7 @@ public class MainGameManager2 : MonoBehaviour
             {
                 for (int FoodNum = 0; FoodNum < 10; FoodNum++)
                 {
-                    if (AllTiles[1, FoodNum].Number == 0)
+                    if (AllTiles[1, FoodNum].Number == 0 && Player1Ingred[FoodNum] == 0)
                     {
                         AllTiles[1, FoodNum].Number = AllTiles[0, 0].Number;
                         Player1Ingred[FoodNum] = AllTiles[0, 0].Number;
@@ -280,7 +312,7 @@ public class MainGameManager2 : MonoBehaviour
                 }
                 for (int FoodNum = 0; FoodNum < 10; FoodNum++)
                 {
-                    if (AllTiles[2, FoodNum].Number == 0)
+                    if (AllTiles[2, FoodNum].Number == 0 && Player2Ingred[FoodNum] == 0)
                     {
                         AllTiles[2, FoodNum].Number = AllTiles[0, 1].Number;
                         Player2Ingred[FoodNum] = AllTiles[0, 1].Number;
@@ -293,7 +325,7 @@ public class MainGameManager2 : MonoBehaviour
             {
                 for (int FoodNum = 0; FoodNum < 10; FoodNum++)
                 {
-                    if (AllTiles[2, FoodNum].Number == 0)
+                    if (AllTiles[2, FoodNum].Number == 0 && Player2Ingred[FoodNum] == 0)
                     {
                         AllTiles[2, FoodNum].Number = AllTiles[0, 0].Number;
                         Player2Ingred[FoodNum] = AllTiles[0, 0].Number;
@@ -303,7 +335,7 @@ public class MainGameManager2 : MonoBehaviour
                 }
                 for (int FoodNum = 0; FoodNum < 10; FoodNum++)
                 {
-                    if (AllTiles[1, FoodNum].Number == 0)
+                    if (AllTiles[1, FoodNum].Number == 0 && Player1Ingred[FoodNum] == 0)
                     {
                         AllTiles[1, FoodNum].Number = AllTiles[0, 1].Number;
                         Player1Ingred[FoodNum] = AllTiles[0, 1].Number;
@@ -315,76 +347,74 @@ public class MainGameManager2 : MonoBehaviour
             int[] Ingred1 = new int[10];
             bool[] IngredThis1 = new bool[10];
             int m1 = 0;
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 13; i++)
             {
-                for (int j = 0; j < 3; j++)
+                m1 = 0;
+                Ingred1 = new int[10];
+                for (int k = 0; k < 8; k++)
                 {
-                    m1 = 0;
-                    Ingred1 = new int[10];
-                    for (int k = 0; k < 8; k++)
+                    if (Library.Instance.Foods[i].Answers[k].AnswerNumber != 0)
                     {
-                        if (Library.Instance.Categorys[i].Foods[j].Answers[k].AnswerNumber != 0)
+                        for (int l = 0; l < 10; l++)
                         {
-                            for (int l = 0; l < 10; l++)
+                            //Debug.Log(Library.Instance.Categorys[i].CategoryName + "," + Library.Instance.Categorys[i].Foods[j].FoodName + "," + Library.Instance.Categorys[i].Foods[j].Answers[k].AnswerName + "," + l);
+                            if (Library.Instance.Foods[i].Answers[k].AnswerNumber == AllTiles[1, l].Number)
                             {
-                                //Debug.Log(Library.Instance.Categorys[i].CategoryName + "," + Library.Instance.Categorys[i].Foods[j].FoodName + "," + Library.Instance.Categorys[i].Foods[j].Answers[k].AnswerName + "," + l);
-                                if (Library.Instance.Categorys[i].Foods[j].Answers[k].AnswerNumber == AllTiles[1, l].Number)
-                                {
-                                    //Debug.Log(Library.Instance.Categorys[i].Foods[j].FoodName + "の" + Library.Instance.Categorys[i].Foods[j].Answers[k].AnswerName + "があるよ");
-                                    Ingred1[m1] = l;
-                                    IngredThis1[k] = true;
-                                    m1++;
-                                    break;
-                                }
-                                else if (l == 9)
-                                {
-                                    //Debug.Log(Library.Instance.Categorys[i].Foods[j].FoodName + "の" + Library.Instance.Categorys[i].Foods[j].Answers[k].AnswerName + "がないよ");
-                                    IngredThis1[k] = false;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            IngredThis1[k] = true;
-                        }
-                    }
-                    if (IngredThis1[0] && IngredThis1[1] && IngredThis1[2] && IngredThis1[3] && IngredThis1[4] && IngredThis1[5] && IngredThis1[6] && IngredThis1[7])
-                    {
-                        for (int n = 0; n < 8; n++)
-                        {
-                            AllTiles[1, Ingred1[n]].Number = 0;
-                        }
-                        Debug.Log(Library.Instance.Categorys[i].Foods[j].FoodName + "が作れる");
-                        P1Score += 100;
-                        for (int FoodNum = 0; FoodNum < 10; FoodNum++)
-                        {
-                            if (madeFood1[FoodNum].sprite == null)
-                            {
-                                madeFood1[FoodNum].enabled = true;
-                                madeFood1[FoodNum].sprite = Library.Instance.Categorys[i].Foods[j].FoodSprite;
+                                //Debug.Log(Library.Instance.Categorys[i].Foods[j].FoodName + "の" + Library.Instance.Categorys[i].Foods[j].Answers[k].AnswerName + "があるよ");
+                                Ingred1[m1] = l;
+                                IngredThis1[k] = true;
+                                m1++;
                                 break;
                             }
+                            else if (l == 9)
+                            {
+                                //Debug.Log(Library.Instance.Categorys[i].Foods[j].FoodName + "の" + Library.Instance.Categorys[i].Foods[j].Answers[k].AnswerName + "がないよ");
+                                IngredThis1[k] = false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        IngredThis1[k] = true;
+                    }
+                }
+                if (IngredThis1[0] && IngredThis1[1] && IngredThis1[2] && IngredThis1[3] && IngredThis1[4] && IngredThis1[5] && IngredThis1[6] && IngredThis1[7])
+                {
+                    for (int n = 0; n < 8; n++)
+                    {
+                        AllTiles[1, Ingred1[n]].Number = 0;
+                        Player1Ingred[Ingred1[n]] = 0;
+                    }
+                    Debug.Log(Library.Instance.Foods[i].FoodName + "が作れる");
+                    P1Score += 100;
+                    for (int FoodNum = 0; FoodNum < 10; FoodNum++)
+                    {
+                        if (madeFood1[FoodNum].sprite == null)
+                        {
+                            madeFood1[FoodNum].enabled = true;
+                            madeFood1[FoodNum].sprite = Library.Instance.Foods[i].FoodSprite;
+                            break;
                         }
                     }
                 }
+
             }
             int[] Ingred2 = new int[10];
             bool[] IngredThis2 = new bool[10];
             int m2 = 0;
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 13; i++)
             {
-                for (int j = 0; j < 3; j++)
-                {
+
                     m2 = 0;
                     Ingred2 = new int[10];
                     for (int k = 0; k < 8; k++)
                     {
-                        if (Library.Instance.Categorys[i].Foods[j].Answers[k].AnswerNumber != 0)
+                        if (Library.Instance.Foods[i].Answers[k].AnswerNumber != 0)
                         {
                             for (int l = 0; l < 10; l++)
                             {
                                 //Debug.Log(Library.Instance.Categorys[i].CategoryName + "," + Library.Instance.Categorys[i].Foods[j].FoodName + "," + Library.Instance.Categorys[i].Foods[j].Answers[k].AnswerName + "," + l);
-                                if (Library.Instance.Categorys[i].Foods[j].Answers[k].AnswerNumber == AllTiles[2, l].Number)
+                                if (Library.Instance.Foods[i].Answers[k].AnswerNumber == AllTiles[2, l].Number)
                                 {
                                     //Debug.Log(Library.Instance.Categorys[i].Foods[j].FoodName + "の" + Library.Instance.Categorys[i].Foods[j].Answers[k].AnswerName + "があるよ");
                                     Ingred2[m2] = l;
@@ -409,20 +439,21 @@ public class MainGameManager2 : MonoBehaviour
                         for (int n = 0; n < 8; n++)
                         {
                             AllTiles[2, Ingred2[n]].Number = 0;
-                        }
-                        Debug.Log(Library.Instance.Categorys[i].Foods[j].FoodName + "が作れる");
+                            Player2Ingred[Ingred2[n]] = 0;
+                    }
+                        // Debug.Log(Library.Instance.Categorys[i].Foods[j].FoodName + "が作れる");
                         P2Score += 100;
                         for (int FoodNum = 0; FoodNum < 10; FoodNum++)
                         {
                             if (madeFood2[FoodNum].sprite == null)
                             {
                                 madeFood2[FoodNum].enabled = true;
-                                madeFood2[FoodNum].sprite = Library.Instance.Categorys[i].Foods[j].FoodSprite;
+                                madeFood2[FoodNum].sprite = Library.Instance.Foods[i].FoodSprite;
                                 break;
                             }
                         }
                     }
-                }
+                
             }
             state = State.Check;
         }
@@ -468,11 +499,15 @@ public class MainGameManager2 : MonoBehaviour
                 {
                     if (AllTiles[1, i].Number == 0)
                     {
+                        Player1Ingred[i] = Player1Ingred[i + 1];
+                        Player1Ingred[i + 1] = 0;
                         AllTiles[1, i].Number = AllTiles[1, i + 1].Number;
                         AllTiles[1, i + 1].Number = 0;
                     }
                     if (AllTiles[2, i].Number == 0)
                     {
+                        Player2Ingred[i] = Player2Ingred[i + 1];
+                        Player2Ingred[i + 1] = 0;
                         AllTiles[2, i].Number = AllTiles[2, i + 1].Number;
                         AllTiles[2, i + 1].Number = 0;
                     }
