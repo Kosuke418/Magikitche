@@ -89,7 +89,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1353,6 +1353,10 @@ MonoBehaviour:
   P2Sprite: {fileID: 780514872}
   Curtain1: {fileID: 1116077426}
   Curtain2: {fileID: 834792644}
+  BronzCoin: {fileID: 7311630096573339531, guid: dfb604540df3d7b4d93a6304873c04c8,
+    type: 3}
+  GoldCoin: {fileID: 8810058775353404135, guid: ea397263d201c8446931f79585586a1a,
+    type: 3}
   foodImage: {fileID: 1736003164}
   endImage:
   - {fileID: 1789963273}
@@ -1360,7 +1364,7 @@ MonoBehaviour:
   endText:
   - {fileID: 775956707}
   soundMoney1: {fileID: 8300000, guid: 6283f0b4b2f671844a5537ceb3749dc1, type: 3}
-  soundMoney2: {fileID: 8300000, guid: c565bd209ffcffe419eebf55c5ab9dd2, type: 3}
+  soundMoney2: {fileID: 8300000, guid: 6957cd2e7666718478526656017505fd, type: 3}
   audioWood: {fileID: 8300000, guid: 408a7624cd90ab84c8a75f91eea8423f, type: 3}
 --- !u!82 &1098757723
 AudioSource:
@@ -1369,11 +1373,11 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1098757716}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
+  m_audioClip: {fileID: 8300000, guid: a299a4defb30f1d4f8673084d09784a2, type: 3}
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 1

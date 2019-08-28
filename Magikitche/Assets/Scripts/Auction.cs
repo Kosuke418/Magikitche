@@ -10,7 +10,7 @@ public class Auction : MonoBehaviour
     Text p1ScoreText, p2ScoreText, p1BidValueText, p2BidValueText, auctionTimer, lbText, rbText;
     //各プレイヤーの得点、入札額、タイマーの変数
     [SerializeField]
-    GameObject P1Sprite, P2Sprite, Curtain1, Curtain2;
+    GameObject P1Sprite, P2Sprite, Curtain1, Curtain2, BronzCoin, GoldCoin;
     [SerializeField]
     Image foodImage;
     [SerializeField]
@@ -20,9 +20,9 @@ public class Auction : MonoBehaviour
     [SerializeField]
     AudioClip soundMoney1, soundMoney2, audioWood;
     AudioSource audioMoney1;
-    int player, kamenRiderKuronos, kamenRiderZeroOne, pcount, coinCount, charaCount, bidCount;//playerは現在の先行プレイヤーと入札ターンのプレイヤーの判定に使う。
+    int player, kamenRiderKuronos, kamenRiderZeroOne, pcount, coinCount, charaCount, bidCount, p1BidCount, p2BidCount;//playerは現在の先行プレイヤーと入札ターンのプレイヤーの判定に使う。
     int[] textCase = new int[2];
-    float R, G, B, kamenRider, charaTransform, curtainTransform;
+    float R, G, B, kamenRider, charaTransform, curtainTransform, x, y, z, p1TenCount, p2TenCount;
 
     void Start()
     {
@@ -64,6 +64,14 @@ public class Auction : MonoBehaviour
         audioMoney2.loop = (true);
         */
 
+        //初期化一覧
+        x = 50;
+        y = -40;
+        z = 100;
+        p1BidCount = 0;
+        p2BidCount = 0;
+        p1TenCount = 0;
+        p2TenCount = 0;
         charaCount = 1;
         coinCount = 0;
         bidCount = 0;
@@ -123,7 +131,7 @@ public class Auction : MonoBehaviour
         }
     }
 
-    private void Onclick(int bNum, int bidPlayer)
+    private void BidCheck(int bNum, int bidPlayer)
     {
         textCase[0] = int.Parse(p1BidValueText.text);
         textCase[1] = int.Parse(p2BidValueText.text);
@@ -133,11 +141,13 @@ public class Auction : MonoBehaviour
             {
                 p1BidValueText.text = (textCase[1] + 10).ToString();
                 audioMoney1.PlayOneShot(soundMoney1);
+                CoinCreate(bNum, bidPlayer);
             }
             else if (bidPlayer == 2 && textCase[0] >= textCase[1])
             {
                 p2BidValueText.text = (textCase[0] + 10).ToString();
                 audioMoney1.PlayOneShot(soundMoney1);
+                CoinCreate(bNum, bidPlayer);
             }
         }
         else if (bNum == 1)
@@ -146,13 +156,14 @@ public class Auction : MonoBehaviour
             {
                 p1BidValueText.text = (textCase[1] + 100).ToString();
                 audioMoney1.PlayOneShot(soundMoney1);
+                CoinCreate(bNum, bidPlayer);
             }
             else if (bidPlayer == 2&& textCase[0] >= textCase[1])
             {
                 p2BidValueText.text = (textCase[0] + 100).ToString();
                 audioMoney1.PlayOneShot(soundMoney1);
-            }
-            
+                CoinCreate(bNum, bidPlayer);
+            }   
         }
 
         //時間追加のプログラム:最大でも3s追加は3回, 2s追加は2回, 1s追加は1回
@@ -239,24 +250,63 @@ public class Auction : MonoBehaviour
     {
         if (Input.GetKeyDown("joystick 1 button 4") || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown("joystick 1 button 2"))
         {
-            Onclick(0, 1);
+            BidCheck(0, 1);
             Debug.Log("j1Button4(LB)");
         }
         if (Input.GetKeyDown("joystick 1 button 5") || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown("joystick 1 button 1"))
         {
-            Onclick(1, 1);
+            BidCheck(1, 1);
             Debug.Log("j1Button5(RB)");
         }
 
         if (Input.GetKeyDown("joystick 2 button 4") || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown("joystick 2 button 2"))
         {
-            Onclick(0, 2);
+            BidCheck(0, 2);
             Debug.Log("j2Button4(LB)");
         }
         if (Input.GetKeyDown("joystick 2 button 5") || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown("joystick 2 button 1"))
         {
-            Onclick(1, 2);
+            BidCheck(1, 2);
             Debug.Log("j2Button5(RB)");
+        }
+    }
+
+    void CoinCreate(int bidOR, int playerNumber)
+    {
+        if (bidOR == 0)
+        {
+            if (playerNumber == 1)
+            {
+                Instantiate(BronzCoin, new Vector3(-(x-(4 * p1TenCount)), y+(3*p1BidCount), z), Quaternion.identity);
+                p1BidCount++;
+            }
+            else if (playerNumber == 2)
+            {
+                Instantiate(BronzCoin, new Vector3(x - (4 * p2TenCount), y+ (3 * p2BidCount), z), Quaternion.identity);
+                p2BidCount++;
+            }
+        }else if (bidOR == 1)
+        {
+            if (playerNumber == 1)
+            {
+                Instantiate(GoldCoin, new Vector3(-(x - (4 * p1TenCount)), y+ (3 * p1BidCount), z), Quaternion.identity);
+                p1BidCount++;
+            }
+            else if (playerNumber == 2)
+            {
+                Instantiate(GoldCoin, new Vector3(x - (4 * p2TenCount), y + (3 * p2BidCount), z), Quaternion.identity);
+                p2BidCount++;
+            }
+        }
+        if (p1BidCount == 9)
+        {
+            p1BidCount = 0;
+            p1TenCount++;
+        }
+        if (p2BidCount == 9)
+        {
+            p2BidCount = 0;
+            p2TenCount++;
         }
     }
 

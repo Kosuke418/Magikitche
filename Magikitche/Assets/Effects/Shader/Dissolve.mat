@@ -21,7 +21,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Texture2D_D671EBC4:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: d98e066aff7a87a4fac3a5342a86a30e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -91,7 +91,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - Color_AC4775F: {r: 16, g: 0.29234317, b: 0, a: 0}
+    - Color_AC4775F: {r: 15.999998, g: 1.0028044, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

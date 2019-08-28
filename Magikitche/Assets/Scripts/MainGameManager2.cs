@@ -55,6 +55,7 @@ public class MainGameManager2 : MonoBehaviour
     int[] ReachIngred2 = new int[10];
     bool ReachKaburi;
     int ReachKaburiIngred;
+    public Text TurnCountText;
 
     // オーディオデータ
     public AudioClip StartVoice;
@@ -160,8 +161,9 @@ public class MainGameManager2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       //  Debug.Log(TurnCount);
+        //  Debug.Log(TurnCount);
 
+        TurnCountText.text = "残り食材." + (31 - TurnCount);
         scoreText1.text = P1Score.ToString();
         scoreText2.text = P2Score.ToString();
 
@@ -564,7 +566,7 @@ public class MainGameManager2 : MonoBehaviour
                         seSource.Play();
                     }
 
-                    for (int FoodNum = 0; FoodNum < 4; FoodNum++)
+                    for (int FoodNum = 0; FoodNum < 6; FoodNum++)
                     {
                         if (madeFood1[FoodNum].sprite == null && Player1Food[FoodNum] == 0)
                         {
@@ -577,8 +579,8 @@ public class MainGameManager2 : MonoBehaviour
                 }
                 else if (count1 == 1)
                 {
-                    Debug.Log("残り一個だよ！");
-                    Debug.Log(Library.Instance.Foods[i].FoodName + "," + Library.Instance.Foods[i].Answers[temp1].AnswerName);
+                   // Debug.Log("残り一個だよ！");
+                   // Debug.Log(Library.Instance.Foods[i].FoodName + "," + Library.Instance.Foods[i].Answers[temp1].AnswerName);
                     ReachIngred1[reachCount1] = Library.Instance.Foods[i].Answers[temp1].AnswerNumber;
                     reachCount1++;
                 }
@@ -651,7 +653,7 @@ public class MainGameManager2 : MonoBehaviour
                         seSource.Play();
                     }
 
-                    for (int FoodNum = 0; FoodNum < 4; FoodNum++)
+                    for (int FoodNum = 0; FoodNum < 6; FoodNum++)
                     {
                         if (madeFood2[FoodNum].sprite == null && Player2Food[FoodNum] == 0)
                         {
