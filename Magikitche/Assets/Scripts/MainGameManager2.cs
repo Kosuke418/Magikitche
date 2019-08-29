@@ -69,6 +69,7 @@ public class MainGameManager2 : MonoBehaviour
     public Image IngredTileRight;
     float G0,G1;
 
+
     // オーディオデータ
     public AudioClip StartVoice;
     public AudioClip select;

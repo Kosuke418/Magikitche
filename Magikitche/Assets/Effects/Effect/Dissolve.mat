@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Dissolve
   m_Shader: {fileID: 4800000, guid: e95a71e9d14b5d24f848416ff384f3db, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -52,7 +52,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_78735978: 20
+    - Vector1_78735978: 100
     - Vector1_7AED0AAA: 0.01
     - Vector1_D08391B4: -1.69
     - _AlphaClip: 0
@@ -72,7 +72,7 @@ Material:
     - _SrcBlend: 1
     - _Surface: 0
     - _Time: -0.48
-    - _Vector1_D08391B4: 1.28
+    - _Vector1_D08391B4: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:

@@ -22,6 +22,7 @@ public class Tile : MonoBehaviour
             if (number == 0)
             {
                 SetEmpty();
+                SetMaterial();
             }
             else
             {
@@ -35,7 +36,6 @@ public class Tile : MonoBehaviour
 
     private Text TileText;
     private Image TileImage;
-
 
     private void Awake()
     {
@@ -141,6 +141,12 @@ public class Tile : MonoBehaviour
     private void SetEmpty()
     {
         TileImage.enabled = false;
+    }
+
+    void SetMaterial()
+    {
+        float level = Mathf.Lerp(0, 1, Time.time);
+        TileImage.material.SetFloat("_Vector1_D08391B4", level);
     }
     // Start is called before the first frame update
     void Start()
