@@ -27,7 +27,7 @@ public class StartGame : MonoBehaviour
     {
         level = Mathf.Abs(Mathf.Sin(Time.time * 10));
         Press.color = new Color(0f, 0f, 0f, level);
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown("joystick button 7"))
         {
             StartCoroutine(StartGameDelay(0.5f));
         }

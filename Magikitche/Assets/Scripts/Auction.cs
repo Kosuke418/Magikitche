@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class Auction : MonoBehaviour
 {
     [SerializeField]
-    Text p1ScoreText, p2ScoreText, p1BidValueText, p2BidValueText, auctionTimer, lbText, rbText;
+    Text p1ScoreText, p2ScoreText, p1BidValueText, p2BidValueText, auctionTimer, lbText, rbText, p1FoodPoint, p2FoodPoint, bidTimeReCast;
     //各プレイヤーの得点、入札額、タイマーの変数
     [SerializeField]
     GameObject P1Sprite, P2Sprite, Curtain1, Curtain2, BronzCoin, GoldCoin;
@@ -18,14 +18,32 @@ public class Auction : MonoBehaviour
     [SerializeField]
     Text[] endText = new Text[1];
     [SerializeField]
-    AudioClip soundMoney1, soundMoney2, audioWood;
+    AudioClip soundMoney1, soundMoney2, audioWood, soundQuartzer;
     AudioSource audioMoney1;
-    int player, kamenRiderKuronos, kamenRiderZeroOne, pcount, coinCount, charaCount, bidCount, p1BidCount, p2BidCount;//playerは現在の先行プレイヤーと入札ターンのプレイヤーの判定に使う。
+    int player, kamenRiderKuronos, kamenRiderZeroOne, pcount, coinCount, charaCount, bidCount, p1BidCount, p2BidCount, countQuartzer, lowBid, highBid;//playerは現在の先行プレイヤーと入札ターンのプレイヤーの判定に使う。
     int[] textCase = new int[2];
     float R, G, B, kamenRider, charaTransform, curtainTransform, x, y, z, p1TenCount, p2TenCount;
 
     void Start()
     {
+        //初期化一覧
+        x = 50;
+        y = -40;
+        z = 100;
+        p1BidCount = 0;
+        p2BidCount = 0;
+        p1TenCount = 0;
+        p2TenCount = 0;
+        charaCount = 1;
+        coinCount = 0;
+        bidCount = 6;
+        pcount = 0;
+        kamenRider = 5;
+        curtainTransform = 150;
+        lowBid = 10;
+        highBid = 50;
+        countQuartzer = 0;
+
         Debug.Log("スタート");
         
         //結果表示画面を不可視化
@@ -35,7 +53,6 @@ public class Auction : MonoBehaviour
             G = endImage[count].GetComponent<Image>().color.g;
             B = endImage[count].GetComponent<Image>().color.b;
             endImage[count].GetComponent<Image>().color = new Color(R, G, B, 0.0f);
-            Debug.Log(R + " " + G + " " + B);
         }
         R = endText[0].GetComponent<Text>().color.r;
         G = endText[0].GetComponent<Text>().color.g;
@@ -50,8 +67,8 @@ public class Auction : MonoBehaviour
         p2ScoreText.text = (MainGameManager2.P2Score).ToString();
 
         //操作テキストを設定
-        lbText.text = "+10";
-        rbText.text = "+100";
+        lbText.text = "+" + lowBid.ToString();
+        rbText.text = "+" + highBid.ToString();
 
         //ここから食材画像を指定
         foodImage.sprite = Library.Instance.Ingreds[MainGameManager2.IngredNum].IngredSprite;
@@ -59,38 +76,26 @@ public class Auction : MonoBehaviour
         
         //AudioSourceConmponentを取得
         audioMoney1 = GetComponent<AudioSource>();
-        /*
-        audioMoney2 = GetComponent<AudioSource>();
-        audioMoney2.loop = (true);
-        */
 
-        //初期化一覧
-        x = 50;
-        y = -40;
-        z = 100;
-        p1BidCount = 0;
-        p2BidCount = 0;
-        p1TenCount = 0;
-        p2TenCount = 0;
-        charaCount = 1;
-        coinCount = 0;
-        bidCount = 0;
-        pcount = 0;
-        kamenRider = 5;
-        curtainTransform = 150;
+        //時間回復回数の表示
+        bidTimeReCast.text = "時間回復回数\nあと" + bidCount + "回";
+
+        //食料がリーチの時点数を表示
+        p1FoodPoint.text = MainGameManager2.P1ReachScore;
+        p2FoodPoint.text = MainGameManager2.P2ReachScore;
     }
 
     private void Update()
     {
         CharaMove();
-
         kamenRider -= Time.deltaTime;
         kamenRiderKuronos = (int)kamenRider;
         kamenRiderZeroOne = (int)((kamenRider - kamenRiderKuronos) * 100);
         auctionTimer.text = kamenRiderKuronos.ToString() + ":" + kamenRiderZeroOne;
+        TimeQuartzer();
         if (pcount == 0)
         {
-            ConSwitch();
+            Controler();
             if (kamenRider <= 0)
             {
 
@@ -110,7 +115,11 @@ public class Auction : MonoBehaviour
                 }
                 else if (textCase[0] == textCase[1])
                 {
-                    kamenRider = 3;
+                    //kamenRider = 3;
+                    MainGameManager2.GameProgress = 2;
+                    MainGameManager2.TurnCount--;
+                    SceneManager.LoadScene("Main");
+
                 }
             }
         }
@@ -139,46 +148,35 @@ public class Auction : MonoBehaviour
         {
             if (bidPlayer == 1 && textCase[0] <= textCase[1])
             {
-                p1BidValueText.text = (textCase[1] + 10).ToString();
+                p1BidValueText.text = (textCase[1] + lowBid).ToString();
                 audioMoney1.PlayOneShot(soundMoney1);
                 CoinCreate(bNum, bidPlayer);
+                TimeReCast();
             }
             else if (bidPlayer == 2 && textCase[0] >= textCase[1])
             {
-                p2BidValueText.text = (textCase[0] + 10).ToString();
+                p2BidValueText.text = (textCase[0] + lowBid).ToString();
                 audioMoney1.PlayOneShot(soundMoney1);
                 CoinCreate(bNum, bidPlayer);
+                TimeReCast();
             }
         }
         else if (bNum == 1)
         {
             if (bidPlayer == 1 && textCase[0] <= textCase[1])
             {
-                p1BidValueText.text = (textCase[1] + 100).ToString();
-                audioMoney1.PlayOneShot(soundMoney1);
+                p1BidValueText.text = (textCase[1] + highBid).ToString();
+                audioMoney1.PlayOneShot(soundMoney2);
                 CoinCreate(bNum, bidPlayer);
+                TimeReCast();
             }
             else if (bidPlayer == 2&& textCase[0] >= textCase[1])
             {
-                p2BidValueText.text = (textCase[0] + 100).ToString();
-                audioMoney1.PlayOneShot(soundMoney1);
+                p2BidValueText.text = (textCase[0] + highBid).ToString();
+                audioMoney1.PlayOneShot(soundMoney2);
                 CoinCreate(bNum, bidPlayer);
+                TimeReCast();
             }   
-        }
-
-        //時間追加のプログラム:最大でも3s追加は3回, 2s追加は2回, 1s追加は1回
-        if (kamenRider <= 3 && bidCount <= 2)
-        {
-            kamenRider = 3;
-            bidCount++;
-        }else if(kamenRider <= 2 && bidCount <= 5)
-        {
-            kamenRider = 2;
-            bidCount++;
-        }else if(kamenRider <= 1 && bidCount <= 6)
-        {
-            kamenRider = 1;
-            bidCount++;
         }
     }
 
@@ -246,28 +244,24 @@ public class Auction : MonoBehaviour
     }
     //▲キャラ動作▲
 
-    void ConSwitch()
+    void Controler()
     {
-        if (Input.GetKeyDown("joystick 1 button 4") || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown("joystick 1 button 2"))
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown("joystick 1 button 2")/* || Input.GetKeyDown("joystick 1 button 4")*/)
         {
             BidCheck(0, 1);
-            Debug.Log("j1Button4(LB)");
         }
-        if (Input.GetKeyDown("joystick 1 button 5") || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown("joystick 1 button 1"))
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown("joystick 1 button 1")/*|| Input.GetKeyDown("joystick 1 button 5")*/)
         {
             BidCheck(1, 1);
-            Debug.Log("j1Button5(RB)");
         }
 
-        if (Input.GetKeyDown("joystick 2 button 4") || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown("joystick 2 button 2"))
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown("joystick 2 button 2")/* || Input.GetKeyDown("joystick 2 button 4")*/)
         {
             BidCheck(0, 2);
-            Debug.Log("j2Button4(LB)");
         }
-        if (Input.GetKeyDown("joystick 2 button 5") || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown("joystick 2 button 1"))
+        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown("joystick 2 button 1")/*|| Input.GetKeyDown("joystick 2 button 5")*/)
         {
             BidCheck(1, 2);
-            Debug.Log("j2Button5(RB)");
         }
     }
 
@@ -307,6 +301,51 @@ public class Auction : MonoBehaviour
         {
             p2BidCount = 0;
             p2TenCount++;
+        }
+    }
+
+    void TimeReCast()
+    {
+        if (bidCount >= 1)
+        {
+            //時間追加のプログラム:最大でも3s追加は3回, 2s追加は2回, 1s追加は1回
+            if (kamenRider <= 3 && bidCount >= 4)
+            {
+                kamenRider = 3;
+                bidCount--;
+                bidTimeReCast.text = "時間回復回数\nあと" + bidCount + "回";
+                countQuartzer = 1;
+            }
+            else if (kamenRider <= 2 && bidCount >= 2)
+            {
+                kamenRider = 2;
+                bidCount--;
+                bidTimeReCast.text = "時間回復回数\nあと" + bidCount + "回";
+                countQuartzer = 2;
+            }
+            else if (kamenRider <= 1 && bidCount >= 1)
+            {
+                kamenRider = 1;
+                bidCount--;
+                bidTimeReCast.text = "時間回復回数\nあと" + bidCount + "回";
+            }
+        }
+    }
+
+    void TimeQuartzer()
+    {
+        if (kamenRider <= 3.1f && countQuartzer==0)
+        {
+            audioMoney1.PlayOneShot(soundQuartzer);
+            countQuartzer++;//1になる(次は2秒)
+        }else if (kamenRider <= 2.1f && countQuartzer==1)
+        {
+            audioMoney1.PlayOneShot(soundQuartzer);
+            countQuartzer++;//2になる
+        }else if (kamenRider <= 1.1f && countQuartzer==2)
+        {
+            audioMoney1.PlayOneShot(soundQuartzer);
+            countQuartzer++;//3になる
         }
     }
 
