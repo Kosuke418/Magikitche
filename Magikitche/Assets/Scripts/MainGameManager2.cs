@@ -9,23 +9,19 @@ public class MainGameManager2 : MonoBehaviour
     // 各種タイル
     private Tile[,] AllTiles = new Tile[10, 10];
     private List<Tile> EmptyTiles = new List<Tile>();
-
     // プレイヤーのセレクトボタンの位置
     private int P1 = 2;
     private int P2 = 2;
-
     // タイマー
     int seconds;
     int sseconds;
     public Text timerText;
     public float totalTime;
-
     // セレクトボタン
     public Image select10;
     public Image select11;
     public Image select20;
     public Image select21;
-
     // プレイヤーの所持食材と料理
     public static int[] Player1Ingred = new int[10];
     public static int[] Player2Ingred = new int[10];
@@ -33,16 +29,13 @@ public class MainGameManager2 : MonoBehaviour
     public static int[] Player2Food = new int[6];
     public Image[] madeFood1;
     public Image[] madeFood2;
-
-    // 競売に使う変数
+    // 競売に使うスタティック変数
     public static int GameProgress;
     public static int PrecedNum;
     public static int IngredNum;
     public static int IngredNum2;
-
     // ターン
     public static int TurnCount = 0;
-
     // プレイヤーの点数
     public static int P1Score = 1000;
     public static int P2Score = 1000;
@@ -68,8 +61,6 @@ public class MainGameManager2 : MonoBehaviour
     public Image IngredTileLeft;
     public Image IngredTileRight;
     float G0,G1;
-
-
     // オーディオデータ
     public AudioClip StartVoice;
     public AudioClip select;
@@ -79,7 +70,6 @@ public class MainGameManager2 : MonoBehaviour
     public AudioSource seSource;
     public AudioSource bgmSource;
 
-    // ステータス
     public enum State
     {
         Ready,
@@ -97,6 +87,7 @@ public class MainGameManager2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // すべてのタイルNumberに0を代入する(タイルの初期化)
         Tile[] AllTilesOneDim = GameObject.FindObjectsOfType<Tile>();
         foreach (Tile t in AllTilesOneDim)
         {
@@ -105,17 +96,21 @@ public class MainGameManager2 : MonoBehaviour
             EmptyTiles.Add(t);
         }
 
+        // セレクトカーソルの位置を定める
         P1 = 0;
         P2 = 1;
 
+        // Auctionから帰ってきたときGameProgress=1としてState.MakeFoodに遷移
         if (GameProgress == 1)
         {
             state = State.MakeFood;
         }
+        // Auctionから掛け金0で帰ってきたときGameProgress=2としてState.MakeFoodに遷移
         else if (GameProgress == 2)
         {
             state = State.Generate;
         }
+        // 通常状態においてState.Readyに遷移
         else
         {
             state = State.Ready;
@@ -124,19 +119,10 @@ public class MainGameManager2 : MonoBehaviour
 
     }
 
-    // 食料生成を遅らせる関数
-    private IEnumerator DelayGenerate(int num, float waitTime)
-    {
-        GenerateStop = false;
-        yield return new WaitForSeconds(waitTime);
-        Generate(num);
-        yield return new WaitForSeconds(waitTime);
-        GenerateStop = true;
-    }
-
-    // 食材生成の関数
+    // 食材生成の関数(numは生成する食料数の指定)
     void Generate(int num)
     {
+        //startからendまでの食料を生成
         int start = 1;
         int end = 19;
 
@@ -157,6 +143,7 @@ public class MainGameManager2 : MonoBehaviour
         GenerateStop = true;
     }
 
+    // タイルの並び替えの関数(隙間が空いたら詰める)
     private void CheckTiles()
     {
         for (int j = 0; j < 9; j++)
@@ -181,29 +168,38 @@ public class MainGameManager2 : MonoBehaviour
         }
     }
 
-    // セレクトボタン移動の関数
+    // セレクト指示を移動させる関数
     public void OnClickAct(int number)
     {
         switch (number)
         {
             case 0:
+                seSource.clip = select;
+                seSource.Play();
                 P1 = 0;
                 break;
             case 1:
+                seSource.clip = select;
+                seSource.Play();
                 P1 = 1;
                 break;
             case 2:
+                seSource.clip = select;
+                seSource.Play();
                 P2 = 0;
                 break;
             case 3:
+                seSource.clip = select;
+                seSource.Play();
                 P2 = 1;
                 break;
         }
     }
 
+
+    // プレイヤー１の料理作成の関数
     private void Player1MakeFood()
     {
-        // プレイヤー１の料理作成
         int[] Ingred1;
         bool[] IngredThis1 = new bool[10];
         int m1;
@@ -224,9 +220,9 @@ public class MainGameManager2 : MonoBehaviour
                 {
                     for (int l = 0; l < 10; l++)
                     {
-                        // Debug.Log(Library.Instance.Categorys[i].CategoryName + "," + Library.Instance.Categorys[i].Foods[j].FoodName + "," + Library.Instance.Categorys[i].Foods[j].Answers[k].AnswerName + "," + l);
                         if (Library.Instance.Foods[i].Answers[k].AnswerNumber == AllTiles[1, l].Number)
                         {
+                            // 手持ち食材に当たり食材が存在している場合IngredThisをTrueにする
                             // Debug.Log(Library.Instance.Foods[i].FoodName + "の" + Library.Instance.Foods[i].Answers[k].AnswerNumber + "があるよ");
                             Ingred1[m1] = l;
                             IngredThis1[k] = true;
@@ -235,6 +231,7 @@ public class MainGameManager2 : MonoBehaviour
                         }
                         else if (l == 9)
                         {
+                            // 手持ち食材に当たり食材が存在していない場合IngredThisをFalseにする
                             // Debug.Log(Library.Instance.Foods[i].FoodName + "の" + Library.Instance.Foods[i].Answers[k].AnswerNumber + "がないよ");
                             IngredThis1[k] = false;
                             count1++;
@@ -247,19 +244,22 @@ public class MainGameManager2 : MonoBehaviour
                     IngredThis1[k] = true;
                 }
             }
+
+            // すべてのIngredThisがTrueの場合料理(Foods[i])が作れると判断
             if (IngredThis1[0] && IngredThis1[1] && IngredThis1[2] && IngredThis1[3] && IngredThis1[4] && IngredThis1[5] && IngredThis1[6] && IngredThis1[7])
             {
+                // 料理に使った手持ち食材に0を代入して消去
                 for (int n = 0; n < 8; n++)
                 {
                     AllTiles[1, Ingred1[n]].Number = 0;
                     Player1Ingred[Ingred1[n]] = 0;
                 }
 
-                Debug.Log(Library.Instance.Foods[i].FoodName + "を作った");
-                // ReachIngred1 = new int[10];
-                // ReachFood1 = new int[10];
+                // FoodSocreをPlayerScoreに代入
+                // Debug.Log(Library.Instance.Foods[i].FoodName + "を作った");
                 P1Score += Library.Instance.Foods[i].FoodScore;
 
+                // 料理作成時のSEの判定、1/5の確率で包丁の音がなる
                 random = Random.Range(0, 5);
                 if (random == 0)
                 {
@@ -272,6 +272,7 @@ public class MainGameManager2 : MonoBehaviour
                     seSource.Play();
                 }
 
+                // 出来上がった料理の画像をmadeFoodに代入する
                 for (int FoodNum = 0; FoodNum < 6; FoodNum++)
                 {
                     if (madeFood1[FoodNum].sprite == null && Player1Food[FoodNum] == 0)
@@ -283,10 +284,11 @@ public class MainGameManager2 : MonoBehaviour
                     }
                 }
             }
+
+            // 必要な食材が残り一つであった場合のみReachIngredにリーチ状態の食材番号(AnswerNumber)を代入
             else if (count1 == 1)
             {
-                // Debug.Log("残り一個だよ！")
-                Debug.Log("プレイヤー１リーチ" + Library.Instance.Foods[i].FoodName + "," + Library.Instance.Foods[i].Answers[temp1].AnswerName);
+                // Debug.Log("プレイヤー１リーチ" + Library.Instance.Foods[i].FoodName + "," + Library.Instance.Foods[i].Answers[temp1].AnswerName);
                 ReachIngred1[reachCount1] = Library.Instance.Foods[i].Answers[temp1].AnswerNumber;
                 ReachFood1[reachCount1] = i;
                 reachCount1++;
@@ -294,9 +296,10 @@ public class MainGameManager2 : MonoBehaviour
         }
     }
 
+
+    // プレイヤー２の料理作成の関数
     private void Player2MakeFood()
     {
-        // プレイヤー２の料理作成
         int[] Ingred2;
         bool[] IngredThis2 = new bool[10];
         int m2;
@@ -349,8 +352,6 @@ public class MainGameManager2 : MonoBehaviour
                 }
 
                 // Debug.Log(Library.Instance.Categorys[i].Foods[j].FoodName + "が作れる");
-                // ReachIngred2 = new int[10];
-                // ReachFood2 = new int[10];
                 P2Score += Library.Instance.Foods[i].FoodScore;
 
                 random = Random.Range(0, 5);
@@ -391,12 +392,15 @@ public class MainGameManager2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //  Debug.Log(TurnCount);
 
+        // 残り食材の表示
         TurnCountText.text = "残り食材." + (31 - TurnCount);
+        // PlayerScoreの表示
         scoreText1.text = P1Score.ToString();
         scoreText2.text = P2Score.ToString();
 
+        // ここからゲームの流れに沿ってStateが遷移
+        // ゲームのスタート判定State、スペースが押されたらState.Generateに遷移
         if (state == State.Ready)
         {
             Dialog.enabled = true;
@@ -410,13 +414,10 @@ public class MainGameManager2 : MonoBehaviour
             }
 
         }
+        // 食材を生成するState
         else if (state == State.Generate)
         {
-            for (int i = 0; i < 10; i++)
-            {
-                Debug.Log(Library.Instance.Ingreds[ReachIngred1[i]].IngredName);
-            }
-
+            // Auctionにて掛け金0で帰ってきた場合GameProgress=2としてここに遷移
             if (GameProgress == 2)
             {
                 for (int i = 0; i < 10; i++)
@@ -440,21 +441,30 @@ public class MainGameManager2 : MonoBehaviour
                     }
                 }
             }
+            // 真ん中のタイルに食材が入っていなかった場合自動的にGenerateを行うその後Choiceに遷移
             if (AllTiles[0, 0].Number == 0 && AllTiles[0, 1].Number == 0)
             {
                 Generate(2);
                 TurnCount++;
+                // 食材選択の制限時間
                 totalTime = 5f;
                 state = State.Choice;
             }
         }
+        // 食材を選択する際のState
         else if (state == State.Choice)
         {
+            // リーチ食材が真ん中タイルに生成されている場合
+            // P1リーチの場合赤色に点滅
+            // P2リーチの場合青色に点滅
+            // 両者リーチの場合紫色に点滅
             float level = 0.90f * Mathf.Abs(Mathf.Sin(Time.time * 3));
+            // 左側タイルのP1リーチ判定
             for (int i = 0; i < 10; i++)
             {
                 if (ReachIngred1[i] == AllTiles[0, 0].Number)
                 {
+                    // 赤色点滅
                     IngredTileLeft.GetComponent<Image>().color = new Color(1f, level, level, 1f);
                     P1ReachScore1.enabled = true;
                     P1ReachScore1.text = "+" + Library.Instance.Foods[ReachFood1[i]].FoodScore.ToString();
@@ -462,23 +472,26 @@ public class MainGameManager2 : MonoBehaviour
                 }
                 else
                 {
+                    // 無色
                     P1ReachScore1.text = "";
                     IngredTileLeft.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
                 }
             }
+            // 左側タイルのP2リーチ判定
             for (int i = 0; i < 10; i++)
             {
                 G0 = IngredTileLeft.GetComponent<Image>().color.g;
                 if (ReachIngred2[i] == AllTiles[0, 0].Number)
                 {
+                    // すでに赤色に点滅する判定を受けていた場合紫色に点滅
                     if (G0 != 1f)
                     {
-                        //Debug.Log(01);
+                        // 紫色に点滅
                         IngredTileLeft.GetComponent<Image>().color = new Color(1f, level, 1f, 1f);
                     }
                     else
                     {
-                        //Debug.Log(02);
+                        //青色に点滅
                         IngredTileLeft.GetComponent<Image>().color = new Color(level, level, 1f, 1f);
                     }
                     P2ReachScore1.enabled = true;
@@ -490,6 +503,7 @@ public class MainGameManager2 : MonoBehaviour
                     P2ReachScore1.text = "";
                 }
             }
+            // 右側タイルのP1リーチ判定
             for (int i = 0; i < 10; i++)
             {
                 if (ReachIngred1[i] == AllTiles[0, 1].Number)
@@ -505,20 +519,18 @@ public class MainGameManager2 : MonoBehaviour
                     IngredTileRight.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
                 }
             }
+            // 右側タイルのP2リーチ判定
             for (int i = 0; i < 10; i++)
             {
                 G1 = IngredTileRight.GetComponent<Image>().color.g;
                 if (ReachIngred2[i] == AllTiles[0, 1].Number)
                 {
-
                     if (G1 != 1f)
                     {
-                        //Debug.Log(11);
                         IngredTileRight.GetComponent<Image>().color = new Color(1f, level, 1f, 1f);
                     }
                     else
                     {
-                        //Debug.Log(12);
                         IngredTileRight.GetComponent<Image>().color = new Color(level, level, 1f, 1f);
                     }
                     P2ReachScore2.enabled = true;
@@ -530,6 +542,8 @@ public class MainGameManager2 : MonoBehaviour
                     P2ReachScore2.text = "";
                 }
             }
+
+            // タイマーの表示とスタート
             totalTime -= Time.deltaTime;
             seconds = (int)totalTime;
             sseconds = (int)((totalTime - seconds) * 100);
@@ -537,6 +551,8 @@ public class MainGameManager2 : MonoBehaviour
             {
                 timerText.text = seconds.ToString() + "." + sseconds.ToString();
             }
+
+            // 
             if (P1 == 0)
             {
                 select10.enabled = true;
@@ -557,45 +573,53 @@ public class MainGameManager2 : MonoBehaviour
                 select21.enabled = true;
                 select20.enabled = false;
             }
-            for (int i = 0; i < 9; i++)
-            {
-                if (AllTiles[1, i].Number == 0)
-                {
-                    AllTiles[1, i].Number = AllTiles[1, i + 1].Number;
-                    AllTiles[1, i + 1].Number = 0;
-                }
-                if (AllTiles[2, i].Number == 0)
-                {
-                    AllTiles[2, i].Number = AllTiles[2, i + 1].Number;
-                    AllTiles[2, i + 1].Number = 0;
-                }
-            }
             if (GenerateStop == true)
             {
-                if (Input.GetKeyDown("joystick 1 button 4") || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown("joystick 1 button 2"))
+                bool leftswitch1 = true;
+                bool rightswitch1 = true;
+                bool leftswitch2 = true;
+                bool rightswitch2 = true;
+                if ((Input.GetAxis("P1Closs") <= -1.0f || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown("joystick 1 button 2") )&& leftswitch1)
                 {
-                    seSource.clip = select;
-                    seSource.Play();
                     OnClickAct(0);
+                    leftswitch1 = false;
                 }
-                else if (Input.GetKeyDown("joystick 1 button 5") || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown("joystick 1 button 1"))
+                else if (Input.GetAxis("P1Closs") >= -0.9f)
                 {
-                    seSource.clip = select;
-                    seSource.Play();
+                    leftswitch1 = true;
+                }
+
+                if ((Input.GetAxis("P1Closs") >= 1.0f || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown("joystick 1 button 1"))&& rightswitch1)
+                {
                     OnClickAct(1);
+                    rightswitch1 = false;
                 }
-                else if (Input.GetKeyDown("joystick 2 button 4") || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown("joystick 2 button 2"))
+                else if (Input.GetAxis("P1Closs") <= 0.9f)
                 {
-                    seSource.clip = select;
-                    seSource.Play();
+                    rightswitch1 = true;
+                }
+
+
+                if ((Input.GetAxis("P2Closs") <= -1.0f || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown("joystick 2 button 2")) && leftswitch2)
+                {
                     OnClickAct(2);
+                    leftswitch2 = false;
                 }
-                else if (Input.GetKeyDown("joystick 2 button 5") || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown("joystick 2 button 1"))
+                else if(Input.GetAxis("P2Closs") >= -0.9f)
                 {
-                    seSource.clip = select;
-                    seSource.Play();
-                    OnClickAct(3);
+                    leftswitch2 = true;
                 }
+
+                if ((Input.GetAxis("P2Closs") >= 1.0f || Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown("joystick 2 button 1")) && rightswitch2)
+                {
+                    OnClickAct(3);
+                    rightswitch2 = false;
+                }
+                else if (Input.GetAxis("P2Closs") <= 0.9f)
+                {
+                    rightswitch2 = true;
+                }
+
             }
             if (totalTime <= 0)
             {

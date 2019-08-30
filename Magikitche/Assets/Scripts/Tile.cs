@@ -18,7 +18,6 @@ public class Tile : MonoBehaviour
         set
         {
             number = value;
-            //Debug.Log("number:" + number);
             if (number == 0)
             {
                 SetEmpty();
@@ -45,7 +44,6 @@ public class Tile : MonoBehaviour
     void ApplyStyleFromHolder(int index)
     {
         TileImage.sprite = Library.Instance.Ingreds[index].IngredSprite;
-       // TileImage.material.SetFloat("_Vector1_D08391B4", 1f);
     }
 
     void ApplyStyle(int num)

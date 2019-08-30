@@ -22,6 +22,7 @@ public class Auction : MonoBehaviour
     AudioSource audioMoney1;
     int player, kamenRiderKuronos, kamenRiderZeroOne, pcount, coinCount, charaCount, bidCount, p1BidCount, p2BidCount, countQuartzer, lowBid, highBid;//playerは現在の先行プレイヤーと入札ターンのプレイヤーの判定に使う。
     int[] textCase = new int[2];
+    int[] CoinYet=new int[2];
     float R, G, B, kamenRider, charaTransform, curtainTransform, x, y, z, p1TenCount, p2TenCount;
 
     void Start()
@@ -43,6 +44,9 @@ public class Auction : MonoBehaviour
         lowBid = 10;
         highBid = 50;
         countQuartzer = 0;
+        CoinYet[0] = 10;
+        CoinYet[1] = 10;
+
 
         Debug.Log("スタート");
         
@@ -148,16 +152,22 @@ public class Auction : MonoBehaviour
         {
             if (bidPlayer == 1 && textCase[0] <= textCase[1])
             {
+                CoinCreate(CoinYet[0], 1);
                 p1BidValueText.text = (textCase[1] + lowBid).ToString();
                 audioMoney1.PlayOneShot(soundMoney1);
                 CoinCreate(bNum, bidPlayer);
+                CoinYet[0] = bNum;
+                CoinYet[1] = bidPlayer;
                 TimeReCast();
             }
             else if (bidPlayer == 2 && textCase[0] >= textCase[1])
             {
+                CoinCreate(CoinYet[0], 2);
                 p2BidValueText.text = (textCase[0] + lowBid).ToString();
                 audioMoney1.PlayOneShot(soundMoney1);
                 CoinCreate(bNum, bidPlayer);
+                CoinYet[0] = bNum;
+                CoinYet[1] = bidPlayer;
                 TimeReCast();
             }
         }
@@ -165,16 +175,22 @@ public class Auction : MonoBehaviour
         {
             if (bidPlayer == 1 && textCase[0] <= textCase[1])
             {
+                CoinCreate(CoinYet[0], 1);
                 p1BidValueText.text = (textCase[1] + highBid).ToString();
                 audioMoney1.PlayOneShot(soundMoney2);
                 CoinCreate(bNum, bidPlayer);
+                CoinYet[0] = bNum;
+                CoinYet[1] = bidPlayer;
                 TimeReCast();
             }
             else if (bidPlayer == 2&& textCase[0] >= textCase[1])
             {
+                CoinCreate(CoinYet[0], 2);
                 p2BidValueText.text = (textCase[0] + highBid).ToString();
                 audioMoney1.PlayOneShot(soundMoney2);
                 CoinCreate(bNum, bidPlayer);
+                CoinYet[0] = bNum;
+                CoinYet[1] = bidPlayer;
                 TimeReCast();
             }   
         }
@@ -267,40 +283,44 @@ public class Auction : MonoBehaviour
 
     void CoinCreate(int bidOR, int playerNumber)
     {
-        if (bidOR == 0)
+        if (bidOR != 10 || playerNumber != 10)
         {
-            if (playerNumber == 1)
+            if (bidOR == 0)
             {
-                Instantiate(BronzCoin, new Vector3(-(x-(4 * p1TenCount)), y+(3*p1BidCount), z), Quaternion.identity);
-                p1BidCount++;
+                if (playerNumber == 1)
+                {
+                    Instantiate(BronzCoin, new Vector3(-(x - (4 * p1TenCount)), y + (3 * p1BidCount), z), Quaternion.identity);
+                    p1BidCount++;
+                }
+                else if (playerNumber == 2)
+                {
+                    Instantiate(BronzCoin, new Vector3(x - (4 * p2TenCount), y + (3 * p2BidCount), z), Quaternion.identity);
+                    p2BidCount++;
+                }
             }
-            else if (playerNumber == 2)
+            else if (bidOR == 1)
             {
-                Instantiate(BronzCoin, new Vector3(x - (4 * p2TenCount), y+ (3 * p2BidCount), z), Quaternion.identity);
-                p2BidCount++;
+                if (playerNumber == 1)
+                {
+                    Instantiate(GoldCoin, new Vector3(-(x - (4 * p1TenCount)), y + (3 * p1BidCount), z), Quaternion.identity);
+                    p1BidCount++;
+                }
+                else if (playerNumber == 2)
+                {
+                    Instantiate(GoldCoin, new Vector3(x - (4 * p2TenCount), y + (3 * p2BidCount), z), Quaternion.identity);
+                    p2BidCount++;
+                }
             }
-        }else if (bidOR == 1)
-        {
-            if (playerNumber == 1)
+            if (p1BidCount == 14)
             {
-                Instantiate(GoldCoin, new Vector3(-(x - (4 * p1TenCount)), y+ (3 * p1BidCount), z), Quaternion.identity);
-                p1BidCount++;
+                p1BidCount = 0;
+                p1TenCount++;
             }
-            else if (playerNumber == 2)
+            if (p2BidCount == 14)
             {
-                Instantiate(GoldCoin, new Vector3(x - (4 * p2TenCount), y + (3 * p2BidCount), z), Quaternion.identity);
-                p2BidCount++;
+                p2BidCount = 0;
+                p2TenCount++;
             }
-        }
-        if (p1BidCount == 9)
-        {
-            p1BidCount = 0;
-            p1TenCount++;
-        }
-        if (p2BidCount == 9)
-        {
-            p2BidCount = 0;
-            p2TenCount++;
         }
     }
 
