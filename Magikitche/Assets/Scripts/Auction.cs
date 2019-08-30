@@ -16,7 +16,7 @@ public class Auction : MonoBehaviour
     [SerializeField]
     Image[] endImage = new Image[2];
     [SerializeField]
-    Text[] endText = new Text[1];
+    private Text[] endText = new Text[1];
     [SerializeField]
     AudioClip soundMoney1, soundMoney2, audioWood, soundQuartzer;
     AudioSource audioMoney1;
@@ -46,7 +46,6 @@ public class Auction : MonoBehaviour
         countQuartzer = 0;
         CoinYet[0] = 10;
         CoinYet[1] = 10;
-
 
         Debug.Log("スタート");
         

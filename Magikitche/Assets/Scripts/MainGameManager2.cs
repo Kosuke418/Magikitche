@@ -584,7 +584,7 @@ public class MainGameManager2 : MonoBehaviour
                     OnClickAct(0);
                     leftswitch1 = false;
                 }
-                else if (Input.GetAxis("P1Closs") >= -0.9f)
+                if (Input.GetAxis("P1Closs") >= -0.9f)
                 {
                     leftswitch1 = true;
                 }
@@ -594,7 +594,7 @@ public class MainGameManager2 : MonoBehaviour
                     OnClickAct(1);
                     rightswitch1 = false;
                 }
-                else if (Input.GetAxis("P1Closs") <= 0.9f)
+                if (Input.GetAxis("P1Closs") <= 0.9f)
                 {
                     rightswitch1 = true;
                 }
@@ -605,7 +605,7 @@ public class MainGameManager2 : MonoBehaviour
                     OnClickAct(2);
                     leftswitch2 = false;
                 }
-                else if(Input.GetAxis("P2Closs") >= -0.9f)
+                if(Input.GetAxis("P2Closs") >= -0.9f)
                 {
                     leftswitch2 = true;
                 }
@@ -615,7 +615,7 @@ public class MainGameManager2 : MonoBehaviour
                     OnClickAct(3);
                     rightswitch2 = false;
                 }
-                else if (Input.GetAxis("P2Closs") <= 0.9f)
+                if (Input.GetAxis("P2Closs") <= 0.9f)
                 {
                     rightswitch2 = true;
                 }

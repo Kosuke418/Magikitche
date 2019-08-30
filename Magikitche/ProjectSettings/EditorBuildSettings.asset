@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/AuctionScene.unity
     guid: d39354340f181ea4497241cc7defdeb6
+  - enabled: 1
+    path: Assets/Scenes/STAFF.unity
+    guid: 40b288de12169f140b99a194aeee1bf9
   m_configObjects: {}
